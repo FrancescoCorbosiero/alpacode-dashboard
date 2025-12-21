@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} ? ${pageTitle} + ' - Alpacode Dashboard' : 'Alpacode Dashboard'">Alpacode Dashboard</title>
+
+    <!-- Tabler CSS from CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta21/dist/css/tabler.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+    <style>
+        .navbar-brand-image {
+            height: 2rem;
+        }
+        .status-badge {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+<body class="layout-fluid">
+    <div class="page">
+        <!-- Sidebar -->
+        <aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h1 class="navbar-brand navbar-brand-autodark">
+                    <a href="/">
+                        <span class="text-white">Alpacode</span>
+                    </a>
+                </h1>
+                <div class="collapse navbar-collapse" id="sidebar-menu">
+                    <ul class="navbar-nav pt-lg-3">
+                        <!-- Dashboard - visible to all authenticated users -->
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/dashboard}" th:classappend="${#strings.startsWith(#httpServletRequest.requestURI, '/dashboard')} ? 'active' : ''">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-home"></i>
+                                </span>
+                                <span class="nav-link-title">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <!-- Admin section -->
+                        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                            <a class="nav-link" th:href="@{/admin/clients}" th:classappend="${#strings.startsWith(#httpServletRequest.requestURI, '/admin/clients')} ? 'active' : ''">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-users"></i>
+                                </span>
+                                <span class="nav-link-title">Gestione Clienti</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main content wrapper -->
+        <div class="page-wrapper">
+            <!-- Header -->
+            <header class="page-header d-print-none">
+                <div class="container-xl">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            <h2 class="page-title" th:text="${pageTitle}">Page Title</h2>
+                        </div>
+                        <div class="col-auto ms-auto">
+                            <div class="dropdown">
+                                <a href="#" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                    <i class="ti ti-user me-1"></i>
+                                    <span th:text="${user?.name} ?: 'Utente'" sec:authentication="name">User</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" th:href="@{/logout}">
+                                        <i class="ti ti-logout me-2"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page content -->
+            <div class="page-body">
+                <div class="container-xl">
+                    <!-- Flash messages -->
+                    <div th:if="${successMessage}" class="alert alert-success alert-dismissible" role="alert">
+                        <div class="d-flex">
+                            <div><i class="ti ti-check me-2"></i></div>
+                            <div th:text="${successMessage}"></div>
+                        </div>
+                        <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                    </div>
+                    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible" role="alert">
+                        <div class="d-flex">
+                            <div><i class="ti ti-alert-circle me-2"></i></div>
+                            <div th:text="${errorMessage}"></div>
+                        </div>
+                        <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                    </div>
+
+                    <!-- Main content area - replaced by child templates -->
+                    <div layout:fragment="content">
+                        <!-- Content will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer footer-transparent d-print-none">
+                <div class="container-xl">
+                    <div class="row text-center align-items-center">
+                        <div class="col-12">
+                            <span class="text-muted">&copy; 2025 Alpacode Studio. Tutti i diritti riservati.</span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Tabler JS from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta21/dist/js/tabler.min.js"></script>
+</body>
+</html>

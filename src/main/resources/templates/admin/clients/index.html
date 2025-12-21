@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title>Gestione Clienti</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="row row-deck row-cards">
+            <!-- Stats Card -->
+            <div class="col-12">
+                <div class="row row-cards">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="subheader">Totale Clienti</div>
+                                </div>
+                                <div class="h1 mb-0" th:text="${#lists.size(clients)}">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="subheader">Attivi</div>
+                                </div>
+                                <div class="h1 mb-0 text-success" th:text="${#lists.size(clients.?[status.name() == 'ACTIVE'])}">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="subheader">In Attesa</div>
+                                </div>
+                                <div class="h1 mb-0 text-warning" th:text="${#lists.size(clients.?[status.name() == 'PENDING'])}">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="subheader">Disabilitati</div>
+                                </div>
+                                <div class="h1 mb-0 text-danger" th:text="${#lists.size(clients.?[status.name() == 'DISABLED'])}">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clients List -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Lista Clienti</h3>
+                        <div class="card-actions">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inviteModal">
+                                <i class="ti ti-user-plus me-2"></i>
+                                Invita Cliente
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body border-bottom py-3" th:if="${#lists.isEmpty(clients)}">
+                        <div class="empty">
+                            <div class="empty-img">
+                                <i class="ti ti-users-group" style="font-size: 4rem; color: #adb5bd;"></i>
+                            </div>
+                            <p class="empty-title">Nessun cliente</p>
+                            <p class="empty-subtitle text-muted">
+                                Inizia invitando il primo cliente usando il pulsante sopra.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="table-responsive" th:if="${!#lists.isEmpty(clients)}">
+                        <table class="table table-vcenter card-table">
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Email</th>
+                                    <th>Azienda</th>
+                                    <th>Stato</th>
+                                    <th>Data Creazione</th>
+                                    <th class="w-1">Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="client : ${clients}">
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="avatar avatar-sm bg-primary-lt me-2" th:text="${#strings.substring(client.name, 0, 1).toUpperCase()}">U</span>
+                                            <span th:text="${client.name}">Nome Cliente</span>
+                                        </div>
+                                    </td>
+                                    <td th:text="${client.email}">email@example.com</td>
+                                    <td th:text="${client.companyName} ?: '-'">Azienda</td>
+                                    <td>
+                                        <span th:switch="${client.status.name()}">
+                                            <span th:case="'ACTIVE'" class="badge bg-success">Attivo</span>
+                                            <span th:case="'PENDING'" class="badge bg-warning">In Attesa</span>
+                                            <span th:case="'DISABLED'" class="badge bg-danger">Disabilitato</span>
+                                        </span>
+                                    </td>
+                                    <td th:text="${#temporals.format(client.createdAt, 'dd/MM/yyyy HH:mm')}">01/01/2025</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-ghost-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                                Azioni
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <!-- Resend invite for PENDING -->
+                                                <form th:if="${client.status.name() == 'PENDING'}" th:action="@{/admin/clients/{id}/resend-invite(id=${client.id})}" method="post" class="d-inline">
+                                                    <button type="submit" class="dropdown-item">
+                                                        <i class="ti ti-mail-forward me-2"></i>
+                                                        Reinvia Invito
+                                                    </button>
+                                                </form>
+                                                <!-- Disable for ACTIVE -->
+                                                <form th:if="${client.status.name() == 'ACTIVE'}" th:action="@{/admin/clients/{id}/disable(id=${client.id})}" method="post" class="d-inline">
+                                                    <button type="submit" class="dropdown-item text-warning">
+                                                        <i class="ti ti-user-off me-2"></i>
+                                                        Disabilita
+                                                    </button>
+                                                </form>
+                                                <!-- Enable for DISABLED -->
+                                                <form th:if="${client.status.name() == 'DISABLED'}" th:action="@{/admin/clients/{id}/enable(id=${client.id})}" method="post" class="d-inline">
+                                                    <button type="submit" class="dropdown-item text-success">
+                                                        <i class="ti ti-user-check me-2"></i>
+                                                        Riabilita
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Invite Modal -->
+        <div class="modal modal-blur fade" id="inviteModal" tabindex="-1" role="dialog" aria-hidden="true" th:classappend="${showInviteModal} ? 'show' : ''" th:style="${showInviteModal} ? 'display: block;' : ''">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Invita Nuovo Cliente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form th:action="@{/admin/clients/invite}" th:object="${inviteForm}" method="post">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label required">Email</label>
+                                <input type="email"
+                                       th:field="*{email}"
+                                       class="form-control"
+                                       th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                                       placeholder="cliente@azienda.com"
+                                       required>
+                                <div th:if="${#fields.hasErrors('email')}" class="invalid-feedback" th:errors="*{email}"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label required">Nome</label>
+                                <input type="text"
+                                       th:field="*{name}"
+                                       class="form-control"
+                                       th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+                                       placeholder="Mario Rossi"
+                                       required>
+                                <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback" th:errors="*{name}"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nome Azienda <span class="text-muted">(opzionale)</span></label>
+                                <input type="text"
+                                       th:field="*{companyName}"
+                                       class="form-control"
+                                       th:classappend="${#fields.hasErrors('companyName')} ? 'is-invalid' : ''"
+                                       placeholder="Azienda SRL">
+                                <div th:if="${#fields.hasErrors('companyName')}" class="invalid-feedback" th:errors="*{companyName}"></div>
+                            </div>
+                            <p class="text-muted small">
+                                <i class="ti ti-info-circle me-1"></i>
+                                Verrà inviata un'email con un link di invito valido per 48 ore.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="ti ti-send me-2"></i>
+                                Invia Invito
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Show modal if there are errors -->
+        <script th:if="${showInviteModal}">
+            document.addEventListener('DOMContentLoaded', function() {
+                var modal = new bootstrap.Modal(document.getElementById('inviteModal'));
+                modal.show();
+            });
+        </script>
+    </div>
+</body>
+</html>

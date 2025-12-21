@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Alpacode Dashboard</title>
+
+    <!-- Tabler CSS from CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta21/dist/css/tabler.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+<body class="d-flex flex-column bg-white">
+    <div class="page page-center">
+        <div class="container container-tight py-4">
+            <div class="text-center mb-4">
+                <a href="/" class="navbar-brand navbar-brand-autodark">
+                    <h1 class="h1">Alpacode</h1>
+                </a>
+            </div>
+
+            <div class="card card-md">
+                <div class="card-body">
+                    <h2 class="h2 text-center mb-4">Accedi al tuo account</h2>
+
+                    <!-- Success message -->
+                    <div th:if="${message}" class="alert alert-success" role="alert">
+                        <div class="d-flex">
+                            <div><i class="ti ti-check me-2"></i></div>
+                            <div th:text="${message}"></div>
+                        </div>
+                    </div>
+
+                    <!-- Error message -->
+                    <div th:if="${error}" class="alert alert-danger" role="alert">
+                        <div class="d-flex">
+                            <div><i class="ti ti-alert-circle me-2"></i></div>
+                            <div th:text="${error}"></div>
+                        </div>
+                    </div>
+
+                    <form th:action="@{/login}" method="post" autocomplete="off">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="username" class="form-control" placeholder="tuaemail@esempio.com" autocomplete="email" required autofocus>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Password
+                            </label>
+                            <div class="input-group input-group-flat">
+                                <input type="password" name="password" class="form-control" placeholder="La tua password" autocomplete="current-password" required>
+                                <span class="input-group-text">
+                                    <a href="#" class="link-secondary" data-bs-toggle="tooltip" title="Mostra password" onclick="togglePassword(event)">
+                                        <i class="ti ti-eye" id="password-toggle-icon"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="ti ti-login me-2"></i>
+                                Accedi
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center text-muted mt-3">
+                <small>&copy; 2025 Alpacode Studio</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabler JS from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta21/dist/js/tabler.min.js"></script>
+    <script>
+        function togglePassword(event) {
+            event.preventDefault();
+            var passwordInput = document.querySelector('input[name="password"]');
+            var icon = document.getElementById('password-toggle-icon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('ti-eye');
+                icon.classList.add('ti-eye-off');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('ti-eye-off');
+                icon.classList.add('ti-eye');
+            }
+        }
+    </script>
+</body>
+</html>
