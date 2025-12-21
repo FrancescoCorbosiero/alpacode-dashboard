@@ -1,45 +1,32 @@
 package studio.alpacode.app.domain;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
-@Table("users")
 public class User {
 
     @Id
     private Long id;
 
-    @Column("email")
     private String email;
 
-    @Column("password")
     private String password;
 
-    @Column("name")
     private String name;
 
-    @Column("company_name")
     private String companyName;
 
-    @Column("role")
     private Role role;
 
-    @Column("status")
     private Status status;
 
-    @Column("invite_token")
     private String inviteToken;
 
-    @Column("invite_token_expiry")
     private LocalDateTime inviteTokenExpiry;
 
-    @Column("created_at")
     private LocalDateTime createdAt;
 
-    @Column("updated_at")
     private LocalDateTime updatedAt;
 
     public User() {
