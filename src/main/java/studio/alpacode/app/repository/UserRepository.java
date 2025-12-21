@@ -17,10 +17,10 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Optional<User> findByInviteToken(String inviteToken);
 
-    @Query("SELECT * FROM USER WHERE ROLE = :role ORDER BY CREATED_AT DESC")
+    @Query("SELECT * FROM APP_USER WHERE ROLE = :role ORDER BY CREATED_AT DESC")
     List<User> findByRole(@Param("role") String role);
 
-    @Query("SELECT COUNT(*) FROM USER WHERE ROLE = :role")
+    @Query("SELECT COUNT(*) FROM APP_USER WHERE ROLE = :role")
     long countByRole(@Param("role") String role);
 
     boolean existsByEmail(String email);

@@ -13,8 +13,8 @@ public class JdbcConfig {
         return new NamingStrategy() {
             @Override
             public String getTableName(Class<?> type) {
-                // Return uppercase table name to match H2 default
-                return type.getSimpleName().toUpperCase();
+                // Return APP_ prefix + uppercase table name to avoid reserved words
+                return "APP_" + type.getSimpleName().toUpperCase();
             }
 
             @Override
