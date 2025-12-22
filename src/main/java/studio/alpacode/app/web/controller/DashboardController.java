@@ -25,6 +25,7 @@ public class DashboardController {
 
         model.addAttribute("user", user);
         model.addAttribute("pageTitle", "Dashboard");
+        model.addAttribute("currentPage", "dashboard");
 
         return "dashboard/index";
     }

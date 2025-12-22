@@ -32,6 +32,7 @@ public class AdminClientController {
         model.addAttribute("user", currentUser);
         model.addAttribute("inviteForm", new InviteForm());
         model.addAttribute("pageTitle", "Gestione Clienti");
+        model.addAttribute("currentPage", "clients");
 
         return "admin/clients/index";
     }
@@ -57,6 +58,7 @@ public class AdminClientController {
             model.addAttribute("clients", clients);
             model.addAttribute("user", currentUser);
             model.addAttribute("pageTitle", "Gestione Clienti");
+            model.addAttribute("currentPage", "clients");
             model.addAttribute("showInviteModal", true);
 
             return "admin/clients/index";
