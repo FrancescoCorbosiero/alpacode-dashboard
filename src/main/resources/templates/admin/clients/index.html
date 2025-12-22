@@ -7,58 +7,79 @@
 </head>
 <body>
     <div layout:fragment="content">
-        <div class="row row-deck row-cards">
-            <!-- Stats Card -->
-            <div class="col-12">
-                <div class="row row-cards">
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="subheader">Totale Clienti</div>
-                                </div>
-                                <div class="h1 mb-0" th:text="${#lists.size(clients)}">0</div>
+        <!-- Stats Cards Row -->
+        <div class="row row-deck row-cards mb-4">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card stat-card stat-primary">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="stat-icon bg-primary-lt me-3">
+                                <i class="ti ti-users"></i>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="subheader">Attivi</div>
-                                </div>
-                                <div class="h1 mb-0 text-success" th:text="${#lists.size(clients.?[status.name() == 'ACTIVE'])}">0</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="subheader">In Attesa</div>
-                                </div>
-                                <div class="h1 mb-0 text-warning" th:text="${#lists.size(clients.?[status.name() == 'PENDING'])}">0</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="subheader">Disabilitati</div>
-                                </div>
-                                <div class="h1 mb-0 text-danger" th:text="${#lists.size(clients.?[status.name() == 'DISABLED'])}">0</div>
+                            <div>
+                                <p class="stat-label mb-1">Totale Clienti</p>
+                                <p class="stat-value mb-0" th:text="${#lists.size(clients)}">0</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card stat-card stat-success">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="stat-icon bg-success-lt me-3">
+                                <i class="ti ti-user-check"></i>
+                            </div>
+                            <div>
+                                <p class="stat-label mb-1">Attivi</p>
+                                <p class="stat-value text-success mb-0" th:text="${#lists.size(clients.?[status.name() == 'ACTIVE'])}">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card stat-card stat-warning">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="stat-icon bg-warning-lt me-3">
+                                <i class="ti ti-clock"></i>
+                            </div>
+                            <div>
+                                <p class="stat-label mb-1">In Attesa</p>
+                                <p class="stat-value text-warning mb-0" th:text="${#lists.size(clients.?[status.name() == 'PENDING'])}">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card stat-card stat-danger">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="stat-icon bg-danger-lt me-3">
+                                <i class="ti ti-user-off"></i>
+                            </div>
+                            <div>
+                                <p class="stat-label mb-1">Disabilitati</p>
+                                <p class="stat-value text-danger mb-0" th:text="${#lists.size(clients.?[status.name() == 'DISABLED'])}">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <!-- Clients List -->
+        <!-- Clients List Card -->
+        <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Lista Clienti</h3>
+                        <div class="d-flex align-items-center">
+                            <i class="ti ti-users-group me-2 text-primary fs-3"></i>
+                            <h3 class="card-title mb-0">Lista Clienti</h3>
+                        </div>
                         <div class="card-actions">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inviteModal">
                                 <i class="ti ti-user-plus me-2"></i>
@@ -66,17 +87,26 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card-body border-bottom py-3" th:if="${#lists.isEmpty(clients)}">
-                        <div class="empty">
-                            <div class="empty-img">
-                                <i class="ti ti-users-group" style="font-size: 4rem; color: #adb5bd;"></i>
+
+                    <!-- Empty State -->
+                    <div class="card-body" th:if="${#lists.isEmpty(clients)}">
+                        <div class="empty-state text-center py-5">
+                            <div class="empty-state-icon mb-4">
+                                <i class="ti ti-users-group"></i>
                             </div>
-                            <p class="empty-title">Nessun cliente</p>
-                            <p class="empty-subtitle text-muted">
+                            <h3 class="empty-state-title">Nessun cliente</h3>
+                            <p class="empty-state-subtitle mb-4">
+                                Non hai ancora invitato nessun cliente.<br>
                                 Inizia invitando il primo cliente usando il pulsante sopra.
                             </p>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inviteModal">
+                                <i class="ti ti-user-plus me-2"></i>
+                                Invita il primo cliente
+                            </button>
                         </div>
                     </div>
+
+                    <!-- Clients Table -->
                     <div class="table-responsive" th:if="${!#lists.isEmpty(clients)}">
                         <table class="table table-vcenter card-table">
                             <thead>
@@ -85,52 +115,72 @@
                                     <th>Email</th>
                                     <th>Azienda</th>
                                     <th>Stato</th>
-                                    <th>Data Creazione</th>
-                                    <th class="w-1">Azioni</th>
+                                    <th>Data Registrazione</th>
+                                    <th class="text-end">Azioni</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="client : ${clients}">
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <span class="avatar avatar-sm bg-primary-lt me-2" th:text="${#strings.substring(client.name, 0, 1).toUpperCase()}">U</span>
-                                            <span th:text="${client.name}">Nome Cliente</span>
+                                            <span class="client-avatar me-3" th:text="${#strings.substring(client.name, 0, 1).toUpperCase()}">U</span>
+                                            <div>
+                                                <div class="client-name" th:text="${client.name}">Nome Cliente</div>
+                                                <div class="client-id text-muted small">ID: <span th:text="${client.id}">1</span></div>
+                                            </div>
                                         </div>
                                     </td>
-                                    <td th:text="${client.email}">email@example.com</td>
-                                    <td th:text="${client.companyName} ?: '-'">Azienda</td>
+                                    <td>
+                                        <a th:href="'mailto:' + ${client.email}" class="client-email" th:text="${client.email}">email@example.com</a>
+                                    </td>
+                                    <td>
+                                        <span th:if="${client.companyName}" th:text="${client.companyName}">Azienda</span>
+                                        <span th:unless="${client.companyName}" class="text-muted">-</span>
+                                    </td>
                                     <td>
                                         <span th:switch="${client.status.name()}">
-                                            <span th:case="'ACTIVE'" class="badge bg-success">Attivo</span>
-                                            <span th:case="'PENDING'" class="badge bg-warning">In Attesa</span>
-                                            <span th:case="'DISABLED'" class="badge bg-danger">Disabilitato</span>
+                                            <span th:case="'ACTIVE'" class="status-badge status-active">
+                                                <i class="ti ti-circle-check me-1"></i>
+                                                Attivo
+                                            </span>
+                                            <span th:case="'PENDING'" class="status-badge status-pending">
+                                                <i class="ti ti-clock me-1"></i>
+                                                In Attesa
+                                            </span>
+                                            <span th:case="'DISABLED'" class="status-badge status-disabled">
+                                                <i class="ti ti-circle-x me-1"></i>
+                                                Disabilitato
+                                            </span>
                                         </span>
                                     </td>
-                                    <td th:text="${#temporals.format(client.createdAt, 'dd/MM/yyyy HH:mm')}">01/01/2025</td>
                                     <td>
+                                        <span th:text="${#temporals.format(client.createdAt, 'dd MMM yyyy')}">01 Gen 2025</span>
+                                        <div class="text-muted small" th:text="${#temporals.format(client.createdAt, 'HH:mm')}">12:00</div>
+                                    </td>
+                                    <td class="text-end">
                                         <div class="dropdown">
-                                            <button class="btn btn-sm btn-ghost-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                                                Azioni
+                                            <button class="btn btn-sm action-btn dropdown-toggle" data-bs-toggle="dropdown">
+                                                <i class="ti ti-dots-vertical"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <!-- Resend invite for PENDING -->
                                                 <form th:if="${client.status.name() == 'PENDING'}" th:action="@{/admin/clients/{id}/resend-invite(id=${client.id})}" method="post" class="d-inline">
                                                     <button type="submit" class="dropdown-item">
-                                                        <i class="ti ti-mail-forward me-2"></i>
+                                                        <i class="ti ti-mail-forward me-2 text-primary"></i>
                                                         Reinvia Invito
                                                     </button>
                                                 </form>
                                                 <!-- Disable for ACTIVE -->
                                                 <form th:if="${client.status.name() == 'ACTIVE'}" th:action="@{/admin/clients/{id}/disable(id=${client.id})}" method="post" class="d-inline">
-                                                    <button type="submit" class="dropdown-item text-warning">
-                                                        <i class="ti ti-user-off me-2"></i>
+                                                    <button type="submit" class="dropdown-item">
+                                                        <i class="ti ti-user-off me-2 text-warning"></i>
                                                         Disabilita
                                                     </button>
                                                 </form>
                                                 <!-- Enable for DISABLED -->
                                                 <form th:if="${client.status.name() == 'DISABLED'}" th:action="@{/admin/clients/{id}/enable(id=${client.id})}" method="post" class="d-inline">
-                                                    <button type="submit" class="dropdown-item text-success">
-                                                        <i class="ti ti-user-check me-2"></i>
+                                                    <button type="submit" class="dropdown-item">
+                                                        <i class="ti ti-user-check me-2 text-success"></i>
                                                         Riabilita
                                                     </button>
                                                 </form>
@@ -150,47 +200,75 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Invita Nuovo Cliente</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="modal-icon bg-primary-lt me-3">
+                                <i class="ti ti-user-plus"></i>
+                            </div>
+                            <div>
+                                <h5 class="modal-title mb-0">Invita Nuovo Cliente</h5>
+                                <p class="text-muted small mb-0">Invia un invito via email</p>
+                            </div>
+                        </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form th:action="@{/admin/clients/invite}" th:object="${inviteForm}" method="post">
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label class="form-label required">Email</label>
-                                <input type="email"
-                                       th:field="*{email}"
-                                       class="form-control"
-                                       th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
-                                       placeholder="cliente@azienda.com"
-                                       required>
-                                <div th:if="${#fields.hasErrors('email')}" class="invalid-feedback" th:errors="*{email}"></div>
+                                <div class="input-icon">
+                                    <span class="input-icon-addon">
+                                        <i class="ti ti-mail"></i>
+                                    </span>
+                                    <input type="email"
+                                           th:field="*{email}"
+                                           class="form-control"
+                                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                                           placeholder="cliente@azienda.com"
+                                           required>
+                                </div>
+                                <div th:if="${#fields.hasErrors('email')}" class="invalid-feedback d-block" th:errors="*{email}"></div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label required">Nome</label>
-                                <input type="text"
-                                       th:field="*{name}"
-                                       class="form-control"
-                                       th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
-                                       placeholder="Mario Rossi"
-                                       required>
-                                <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback" th:errors="*{name}"></div>
+                                <label class="form-label required">Nome Completo</label>
+                                <div class="input-icon">
+                                    <span class="input-icon-addon">
+                                        <i class="ti ti-user"></i>
+                                    </span>
+                                    <input type="text"
+                                           th:field="*{name}"
+                                           class="form-control"
+                                           th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+                                           placeholder="Mario Rossi"
+                                           required>
+                                </div>
+                                <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback d-block" th:errors="*{name}"></div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Nome Azienda <span class="text-muted">(opzionale)</span></label>
-                                <input type="text"
-                                       th:field="*{companyName}"
-                                       class="form-control"
-                                       th:classappend="${#fields.hasErrors('companyName')} ? 'is-invalid' : ''"
-                                       placeholder="Azienda SRL">
-                                <div th:if="${#fields.hasErrors('companyName')}" class="invalid-feedback" th:errors="*{companyName}"></div>
+                                <label class="form-label">Nome Azienda <span class="text-muted fw-normal">(opzionale)</span></label>
+                                <div class="input-icon">
+                                    <span class="input-icon-addon">
+                                        <i class="ti ti-building"></i>
+                                    </span>
+                                    <input type="text"
+                                           th:field="*{companyName}"
+                                           class="form-control"
+                                           th:classappend="${#fields.hasErrors('companyName')} ? 'is-invalid' : ''"
+                                           placeholder="Azienda SRL">
+                                </div>
+                                <div th:if="${#fields.hasErrors('companyName')}" class="invalid-feedback d-block" th:errors="*{companyName}"></div>
                             </div>
-                            <p class="text-muted small">
-                                <i class="ti ti-info-circle me-1"></i>
-                                Verrà inviata un'email con un link di invito valido per 48 ore.
-                            </p>
+                            <div class="alert alert-info mb-0">
+                                <div class="d-flex">
+                                    <i class="ti ti-info-circle me-2 fs-4"></i>
+                                    <div>
+                                        <strong>Come funziona?</strong>
+                                        <p class="mb-0 small">Verrà inviata un'email con un link di invito. Il link sarà valido per 48 ore.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                            <button type="button" class="btn btn-ghost-secondary" data-bs-dismiss="modal">Annulla</button>
                             <button type="submit" class="btn btn-primary">
                                 <i class="ti ti-send me-2"></i>
                                 Invia Invito
@@ -208,6 +286,174 @@
                 modal.show();
             });
         </script>
+
+        <!-- Additional Styles -->
+        <style>
+            /* Client Avatar */
+            .client-avatar {
+                width: 40px;
+                height: 40px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1rem;
+                font-weight: 600;
+                color: #fff;
+                flex-shrink: 0;
+            }
+
+            .client-name {
+                font-weight: 600;
+                color: #1e293b;
+            }
+
+            .client-email {
+                color: #64748b;
+                text-decoration: none;
+                transition: color 0.2s ease;
+            }
+
+            .client-email:hover {
+                color: #667eea;
+            }
+
+            /* Status Badges */
+            .status-badge {
+                display: inline-flex;
+                align-items: center;
+                padding: 0.35rem 0.75rem;
+                border-radius: 50px;
+                font-size: 0.8rem;
+                font-weight: 500;
+            }
+
+            .status-active {
+                background: rgba(47, 179, 68, 0.1);
+                color: #2fb344;
+            }
+
+            .status-pending {
+                background: rgba(247, 103, 7, 0.1);
+                color: #f76707;
+            }
+
+            .status-disabled {
+                background: rgba(214, 57, 57, 0.1);
+                color: #d63939;
+            }
+
+            /* Action Button */
+            .action-btn {
+                width: 36px;
+                height: 36px;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                color: #64748b;
+                transition: all 0.2s ease;
+            }
+
+            .action-btn:hover {
+                background: #f1f5f9;
+                border-color: #cbd5e1;
+                color: #1e293b;
+            }
+
+            .action-btn::after {
+                display: none;
+            }
+
+            /* Empty State */
+            .empty-state-icon {
+                width: 100px;
+                height: 100px;
+                background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto;
+            }
+
+            .empty-state-icon i {
+                font-size: 2.5rem;
+                color: #94a3b8;
+            }
+
+            .empty-state-title {
+                font-weight: 600;
+                color: #1e293b;
+                margin-bottom: 0.5rem;
+            }
+
+            .empty-state-subtitle {
+                color: #64748b;
+                font-size: 0.95rem;
+            }
+
+            /* Modal Icon */
+            .modal-icon {
+                width: 48px;
+                height: 48px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+            }
+
+            /* Input Icons */
+            .input-icon {
+                position: relative;
+            }
+
+            .input-icon .input-icon-addon {
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #94a3b8;
+                pointer-events: none;
+            }
+
+            .input-icon .form-control {
+                padding-left: 40px;
+            }
+
+            /* Alert Info Styling */
+            .alert-info {
+                background: rgba(66, 153, 225, 0.1);
+                border: none;
+                color: #2563eb;
+            }
+
+            .alert-info i {
+                color: #4299e1;
+            }
+
+            /* Ghost Button */
+            .btn-ghost-secondary {
+                background: transparent;
+                border: 1px solid #e2e8f0;
+                color: #64748b;
+            }
+
+            .btn-ghost-secondary:hover {
+                background: #f1f5f9;
+                border-color: #cbd5e1;
+                color: #1e293b;
+            }
+        </style>
     </div>
 </body>
 </html>
