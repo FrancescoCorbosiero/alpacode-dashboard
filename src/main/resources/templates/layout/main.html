@@ -421,7 +421,7 @@
                     <ul class="navbar-nav pt-lg-3">
                         <!-- Dashboard - visible to all authenticated users -->
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/dashboard}" th:classappend="${#strings.startsWith(#httpServletRequest.requestURI, '/dashboard')} ? 'active' : ''">
+                            <a class="nav-link" th:href="@{/dashboard}" th:classappend="${#strings.startsWith(#request.requestURI, '/dashboard')} ? 'active' : ''">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="ti ti-home fs-2"></i>
                                 </span>
@@ -431,7 +431,7 @@
 
                         <!-- Admin section -->
                         <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-                            <a class="nav-link" th:href="@{/admin/clients}" th:classappend="${#strings.startsWith(#httpServletRequest.requestURI, '/admin/clients')} ? 'active' : ''">
+                            <a class="nav-link" th:href="@{/admin/clients}" th:classappend="${#strings.startsWith(#request.requestURI, '/admin/clients')} ? 'active' : ''">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="ti ti-users fs-2"></i>
                                 </span>
