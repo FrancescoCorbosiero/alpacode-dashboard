@@ -26,7 +26,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     boolean existsByEmail(String email);
 
     default List<User> findAllClients() {
-        return findByRole(Role.CLIENT.name());
+        return findByRole(Role.CUSTOMER.name());
     }
 
     default boolean existsAdmin() {

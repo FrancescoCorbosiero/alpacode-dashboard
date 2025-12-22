@@ -144,7 +144,7 @@ public class User {
     }
 
     public boolean isClient() {
-        return this.role == Role.CLIENT;
+        return this.role == Role.CUSTOMER;
     }
 
     public boolean isInviteTokenValid() {

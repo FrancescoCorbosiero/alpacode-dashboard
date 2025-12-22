@@ -47,7 +47,7 @@ public class SecurityConfig {
                 // Admin area
                 .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
                 // Dashboard - accessible by both ADMIN and CLIENT
-                .requestMatchers("/dashboard/**").hasAnyRole(Role.ADMIN.name(), Role.CLIENT.name())
+                .requestMatchers("/dashboard/**").hasAnyRole(Role.ADMIN.name(), Role.CUSTOMER.name())
                 // Everything else requires authentication
                 .anyRequest().authenticated()
             )

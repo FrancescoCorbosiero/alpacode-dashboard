@@ -57,7 +57,7 @@ public class UserService {
             throw new IllegalArgumentException("Un utente con questa email esiste già");
         }
 
-        User client = new User(email, name, Role.CLIENT, Status.PENDING);
+        User client = new User(email, name, Role.CUSTOMER, Status.PENDING);
         client.setCompanyName(companyName);
         client.setInviteToken(UUID.randomUUID().toString());
         client.setInviteTokenExpiry(LocalDateTime.now().plusHours(48));
