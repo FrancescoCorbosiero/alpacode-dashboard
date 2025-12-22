@@ -7,106 +7,401 @@
 </head>
 <body>
     <div layout:fragment="content">
-        <div class="row row-deck row-cards">
-            <!-- Welcome Card -->
+        <!-- Welcome Hero Section -->
+        <div class="row mb-4">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <span class="avatar avatar-lg bg-primary-lt">
-                                    <i class="ti ti-user" style="font-size: 1.5rem;"></i>
-                                </span>
-                            </div>
-                            <div>
-                                <h3 class="card-title mb-1">
-                                    Benvenuto, <span th:text="${user?.name} ?: 'Utente'">Nome Utente</span>!
-                                </h3>
-                                <p class="text-muted mb-0" th:if="${user?.companyName}">
-                                    <i class="ti ti-building me-1"></i>
+                <div class="card welcome-card">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="welcome-avatar me-3" th:text="${user?.name != null} ? ${#strings.substring(user.name, 0, 1).toUpperCase()} : 'U'">U</span>
+                                    <div>
+                                        <p class="text-muted mb-1 welcome-greeting">Bentornato,</p>
+                                        <h1 class="welcome-name mb-0" th:text="${user?.name} ?: 'Utente'">Nome Utente</h1>
+                                    </div>
+                                </div>
+                                <p class="welcome-subtitle mb-0" th:if="${user?.companyName}">
+                                    <i class="ti ti-building-skyscraper me-2"></i>
                                     <span th:text="${user.companyName}">Nome Azienda</span>
                                 </p>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Info Cards -->
-            <div class="col-sm-6 col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="subheader">Il tuo account</div>
-                        </div>
-                        <div class="d-flex align-items-baseline">
-                            <div class="h1 mb-0 me-2">
-                                <span class="badge bg-success">Attivo</span>
+                            <div class="col-md-4 text-md-end mt-4 mt-md-0">
+                                <div class="welcome-date">
+                                    <i class="ti ti-calendar-event me-2"></i>
+                                    <span th:text="${#temporals.format(#temporals.createNow(), 'EEEE, d MMMM yyyy')}">Lunedì, 1 Gennaio 2025</span>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="subheader">Ruolo</div>
-                        </div>
-                        <div class="d-flex align-items-baseline">
-                            <div class="h1 mb-0 me-2" th:text="${user?.role?.name()} ?: 'N/A'">CLIENT</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="subheader">Email</div>
-                        </div>
-                        <div class="d-flex align-items-baseline">
-                            <div class="h4 mb-0 me-2 text-truncate" style="max-width: 200px;" th:text="${user?.email} ?: 'N/A'">email@example.com</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="subheader">Membro dal</div>
-                        </div>
-                        <div class="d-flex align-items-baseline">
-                            <div class="h4 mb-0 me-2" th:text="${user?.createdAt != null} ? ${#temporals.format(user.createdAt, 'dd/MM/yyyy')} : 'N/A'">01/01/2025</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Placeholder -->
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">I tuoi contenuti</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="empty">
-                            <div class="empty-img">
-                                <i class="ti ti-folder-off" style="font-size: 4rem; color: #adb5bd;"></i>
-                            </div>
-                            <p class="empty-title">Nessun contenuto disponibile</p>
-                            <p class="empty-subtitle text-muted">
-                                I tuoi contenuti appariranno qui quando saranno disponibili.
-                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Stats Cards -->
+        <div class="row row-deck row-cards mb-4">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card stat-card stat-success">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="stat-icon bg-success-lt me-3">
+                                <i class="ti ti-circle-check"></i>
+                            </div>
+                            <div>
+                                <p class="stat-label mb-1">Stato Account</p>
+                                <p class="stat-value text-success mb-0">Attivo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="card stat-card stat-primary">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="stat-icon bg-primary-lt me-3">
+                                <i class="ti ti-user-circle"></i>
+                            </div>
+                            <div>
+                                <p class="stat-label mb-1">Ruolo</p>
+                                <p class="stat-value-sm mb-0" th:text="${user?.role?.name()} ?: 'N/A'">CLIENT</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="card stat-card stat-info">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="stat-icon bg-info-lt me-3">
+                                <i class="ti ti-mail"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <p class="stat-label mb-1">Email</p>
+                                <p class="stat-value-sm text-truncate mb-0" th:text="${user?.email} ?: 'N/A'">email@example.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="card stat-card stat-warning">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="stat-icon bg-warning-lt me-3">
+                                <i class="ti ti-calendar-plus"></i>
+                            </div>
+                            <div>
+                                <p class="stat-label mb-1">Membro dal</p>
+                                <p class="stat-value-sm mb-0" th:text="${user?.createdAt != null} ? ${#temporals.format(user.createdAt, 'dd MMM yyyy')} : 'N/A'">01 Gen 2025</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions & Content -->
+        <div class="row row-deck row-cards">
+            <!-- Quick Actions -->
+            <div class="col-lg-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ti ti-bolt me-2 text-warning"></i>
+                            Azioni Rapide
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action quick-action-item">
+                                <div class="quick-action-icon bg-primary-lt">
+                                    <i class="ti ti-file-text"></i>
+                                </div>
+                                <div class="quick-action-content">
+                                    <h4>I miei documenti</h4>
+                                    <p>Visualizza e gestisci i tuoi file</p>
+                                </div>
+                                <i class="ti ti-chevron-right quick-action-arrow"></i>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action quick-action-item">
+                                <div class="quick-action-icon bg-success-lt">
+                                    <i class="ti ti-message-circle"></i>
+                                </div>
+                                <div class="quick-action-content">
+                                    <h4>Messaggi</h4>
+                                    <p>Contatta il supporto</p>
+                                </div>
+                                <i class="ti ti-chevron-right quick-action-arrow"></i>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action quick-action-item">
+                                <div class="quick-action-icon bg-info-lt">
+                                    <i class="ti ti-settings"></i>
+                                </div>
+                                <div class="quick-action-content">
+                                    <h4>Impostazioni</h4>
+                                    <p>Gestisci il tuo profilo</p>
+                                </div>
+                                <i class="ti ti-chevron-right quick-action-arrow"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-lg-8">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ti ti-folder me-2 text-primary"></i>
+                            I tuoi Progetti
+                        </h3>
+                        <div class="card-actions">
+                            <span class="badge bg-secondary-lt">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="empty-state text-center py-5">
+                            <div class="empty-state-icon mb-4">
+                                <i class="ti ti-rocket"></i>
+                            </div>
+                            <h3 class="empty-state-title">Presto disponibile!</h3>
+                            <p class="empty-state-subtitle">
+                                Stiamo lavorando per offrirti un'esperienza ancora migliore.<br>
+                                I tuoi progetti e contenuti appariranno qui.
+                            </p>
+                            <div class="empty-state-features mt-4">
+                                <span class="feature-tag">
+                                    <i class="ti ti-check me-1"></i>
+                                    Gestione Progetti
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="ti ti-check me-1"></i>
+                                    Condivisione File
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="ti ti-check me-1"></i>
+                                    Tracking Attività
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Styles for Dashboard -->
+        <style>
+            /* Welcome Card */
+            .welcome-card {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border: none;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .welcome-card::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                right: -20%;
+                width: 60%;
+                height: 200%;
+                background: rgba(255,255,255,0.05);
+                border-radius: 50%;
+            }
+
+            .welcome-card::after {
+                content: '';
+                position: absolute;
+                bottom: -30%;
+                left: -10%;
+                width: 40%;
+                height: 150%;
+                background: rgba(255,255,255,0.03);
+                border-radius: 50%;
+            }
+
+            .welcome-avatar {
+                width: 64px;
+                height: 64px;
+                background: rgba(255,255,255,0.2);
+                border: 3px solid rgba(255,255,255,0.3);
+                border-radius: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.75rem;
+                font-weight: 700;
+                color: #fff;
+            }
+
+            .welcome-greeting {
+                color: rgba(255,255,255,0.7);
+                font-size: 0.9rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            .welcome-name {
+                color: #fff;
+                font-size: 1.75rem;
+                font-weight: 700;
+            }
+
+            .welcome-subtitle {
+                color: rgba(255,255,255,0.8);
+                font-size: 1rem;
+            }
+
+            .welcome-date {
+                color: rgba(255,255,255,0.7);
+                font-size: 0.9rem;
+                background: rgba(255,255,255,0.1);
+                padding: 0.5rem 1rem;
+                border-radius: 50px;
+                display: inline-flex;
+                align-items: center;
+            }
+
+            /* Stat Cards Enhancements */
+            .stat-card.stat-info::before {
+                background: #4299e1;
+            }
+
+            .stat-icon.bg-info-lt {
+                background: rgba(66, 153, 225, 0.1);
+                color: #4299e1;
+            }
+
+            .stat-value-sm {
+                font-size: 1.25rem;
+                font-weight: 600;
+                color: #1e293b;
+            }
+
+            /* Quick Actions */
+            .quick-action-item {
+                display: flex;
+                align-items: center;
+                padding: 1rem;
+                border: none;
+                border-radius: 10px;
+                margin-bottom: 0.5rem;
+                transition: all 0.2s ease;
+            }
+
+            .quick-action-item:hover {
+                background: #f8fafc;
+                transform: translateX(4px);
+            }
+
+            .quick-action-item:last-child {
+                margin-bottom: 0;
+            }
+
+            .quick-action-icon {
+                width: 48px;
+                height: 48px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.25rem;
+                margin-right: 1rem;
+                flex-shrink: 0;
+            }
+
+            .quick-action-content {
+                flex: 1;
+            }
+
+            .quick-action-content h4 {
+                margin: 0;
+                font-size: 0.95rem;
+                font-weight: 600;
+                color: #1e293b;
+            }
+
+            .quick-action-content p {
+                margin: 0;
+                font-size: 0.8rem;
+                color: #64748b;
+            }
+
+            .quick-action-arrow {
+                color: #cbd5e1;
+                transition: all 0.2s ease;
+            }
+
+            .quick-action-item:hover .quick-action-arrow {
+                color: #667eea;
+                transform: translateX(4px);
+            }
+
+            /* Empty State */
+            .empty-state-icon {
+                width: 100px;
+                height: 100px;
+                background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto;
+            }
+
+            .empty-state-icon i {
+                font-size: 2.5rem;
+                color: #94a3b8;
+            }
+
+            .empty-state-title {
+                font-weight: 600;
+                color: #1e293b;
+                margin-bottom: 0.5rem;
+            }
+
+            .empty-state-subtitle {
+                color: #64748b;
+                font-size: 0.95rem;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .feature-tag {
+                display: inline-flex;
+                align-items: center;
+                background: #f1f5f9;
+                color: #64748b;
+                padding: 0.4rem 0.8rem;
+                border-radius: 50px;
+                font-size: 0.8rem;
+                margin: 0.25rem;
+            }
+
+            .feature-tag i {
+                color: #2fb344;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                .welcome-name {
+                    font-size: 1.5rem;
+                }
+
+                .welcome-avatar {
+                    width: 56px;
+                    height: 56px;
+                    font-size: 1.5rem;
+                }
+            }
+        </style>
     </div>
 </body>
 </html>
