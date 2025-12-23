@@ -457,7 +457,41 @@
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="ti ti-home fs-2"></i>
                                 </span>
-                                <span class="nav-link-title">Dashboard</span>
+                                <span class="nav-link-title" th:text="#{nav.home}">Home</span>
+                            </a>
+                        </li>
+
+                        <!-- Customer section - CLIENT role -->
+                        <li class="nav-item" sec:authorize="hasRole('CLIENT')">
+                            <a class="nav-link" th:href="@{/invoices}" th:classappend="${currentPage == 'invoices'} ? 'active' : ''">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-file-invoice fs-2"></i>
+                                </span>
+                                <span class="nav-link-title" th:text="#{nav.invoices}">Fatture</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('CLIENT')">
+                            <a class="nav-link" th:href="@{/resources}" th:classappend="${currentPage == 'resources'} ? 'active' : ''">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-files fs-2"></i>
+                                </span>
+                                <span class="nav-link-title" th:text="#{nav.resources}">Risorse</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('CLIENT')">
+                            <a class="nav-link" th:href="@{/projects}" th:classappend="${currentPage == 'projects'} ? 'active' : ''">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-folder fs-2"></i>
+                                </span>
+                                <span class="nav-link-title" th:text="#{nav.projects}">Progetti</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('CLIENT')">
+                            <a class="nav-link" th:href="@{/subscriptions}" th:classappend="${currentPage == 'subscriptions'} ? 'active' : ''">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-credit-card fs-2"></i>
+                                </span>
+                                <span class="nav-link-title" th:text="#{nav.subscriptions}">Abbonamenti</span>
                             </a>
                         </li>
                         <li class="nav-item" sec:authorize="hasRole('ADMIN')">
@@ -465,7 +499,7 @@
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="ti ti-users fs-2"></i>
                                 </span>
-                                <span class="nav-link-title">Gestione Clienti</span>
+                                <span class="nav-link-title" th:text="#{nav.clients}">Gestione Clienti</span>
                             </a>
                         </li>
 
@@ -580,10 +614,12 @@
                                         <div class="fw-semibold" th:text="${user?.name} ?: #{header.user}">Admin</div>
                                         <div class="text-muted small" th:text="${user?.email} ?: ''">admin@example.com</div>
                                     </div>
-                                    <a class="dropdown-item text-danger" th:href="@{/logout}">
-                                        <i class="ti ti-logout me-2"></i>
-                                        <span th:text="#{header.logout}">Logout</span>
-                                    </a>
+                                    <form th:action="@{/logout}" method="post" class="m-0">
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            <i class="ti ti-logout me-2"></i>
+                                            Logout
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

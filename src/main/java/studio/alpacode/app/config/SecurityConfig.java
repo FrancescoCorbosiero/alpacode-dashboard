@@ -42,10 +42,17 @@ public class SecurityConfig {
                 .requestMatchers("/invite/**").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/webfonts/**", "/images/**").permitAll()
                 .requestMatchers("/webjars/**").permitAll()
-                .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/error").permitAll()
+
                 // Admin area
                 .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
+
+                // Customer area (CLIENT only)
+                .requestMatchers("/invoices/**").hasRole(Role.CLIENT.name())
+                .requestMatchers("/resources/**").hasRole(Role.CLIENT.name())
+                .requestMatchers("/projects/**").hasRole(Role.CLIENT.name())
+                .requestMatchers("/subscriptions/**").hasRole(Role.CLIENT.name())
+
                 // Dashboard - accessible by both ADMIN and CLIENT
                 .requestMatchers("/dashboard/**").hasAnyRole(Role.ADMIN.name(), Role.CUSTOMER.name())
                 // Everything else requires authentication
@@ -64,13 +71,6 @@ public class SecurityConfig {
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()
-            )
-            // For H2 console
-            .csrf(csrf -> csrf
-                .ignoringRequestMatchers("/h2-console/**")
-            )
-            .headers(headers -> headers
-                .frameOptions(frameOptions -> frameOptions.sameOrigin())
             );
 
         return http.build();

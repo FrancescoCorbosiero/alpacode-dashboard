@@ -95,18 +95,17 @@
 			<version>1.0.0-beta21</version>
 		</dependency>
 
-		<!-- Database - PostgreSQL (Production) -->
+		<!-- Database - PostgreSQL -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Database - H2 (Development/Testing) -->
+		<!-- Connection Pool - HikariCP (included by default, explicit for clarity) -->
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
 		</dependency>
 
 		<!-- Test -->
