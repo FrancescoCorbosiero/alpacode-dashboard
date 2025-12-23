@@ -56,6 +56,12 @@ spring:
       maximum-pool-size: 5
       minimum-idle: 2
 
+  # SQL initialization
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+
   # H2 Console
   h2:
     console:
@@ -63,12 +69,6 @@ spring:
       path: /h2-console
       settings:
         web-allow-others: false
-
-  # Flyway - Dev uses H2-specific migrations
-  flyway:
-    enabled: true
-    locations: classpath:db/migration/h2
-    baseline-on-migrate: true
 
   # Thymeleaf - disable cache for hot reload
   thymeleaf:
@@ -90,7 +90,6 @@ logging:
   level:
     studio.alpacode: DEBUG
     org.springframework.security: INFO
-    org.flywaydb: INFO
 
 ---
 # =============================================
@@ -115,13 +114,10 @@ spring:
       connection-timeout: 20000
       leak-detection-threshold: 60000
 
-  # Flyway - Prod uses PostgreSQL
-  flyway:
-    enabled: true
-    locations: classpath:db/migration/common,classpath:db/migration/postgresql
-    baseline-on-migrate: false
-    validate-on-migrate: true
-    out-of-order: false
+  # SQL initialization - disabled in prod (use migrations tool)
+  sql:
+    init:
+      mode: never
 
   # Thymeleaf - enable cache
   thymeleaf:
@@ -146,7 +142,6 @@ logging:
   level:
     studio.alpacode: INFO
     org.springframework.security: WARN
-    org.flywaydb: INFO
     com.zaxxer.hikari: WARN
 
 ---
@@ -165,11 +160,11 @@ spring:
     username: sa
     password:
 
-  # Flyway - Test uses H2-specific migrations
-  flyway:
-    enabled: true
-    locations: classpath:db/migration/h2
-    clean-disabled: false
+  # SQL initialization
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
 
   # Mail - disabled
   mail:
