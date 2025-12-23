@@ -497,10 +497,12 @@
                                         <div class="fw-semibold" th:text="${user?.name} ?: 'Utente'">Admin</div>
                                         <div class="text-muted small" th:text="${user?.email} ?: ''">admin@example.com</div>
                                     </div>
-                                    <a class="dropdown-item text-danger" th:href="@{/logout}">
-                                        <i class="ti ti-logout me-2"></i>
-                                        Logout
-                                    </a>
+                                    <form th:action="@{/logout}" method="post" class="m-0">
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            <i class="ti ti-logout me-2"></i>
+                                            Logout
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
