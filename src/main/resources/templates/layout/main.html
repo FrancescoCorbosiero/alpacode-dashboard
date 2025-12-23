@@ -419,8 +419,8 @@
                 </h1>
                 <div class="collapse navbar-collapse" id="sidebar-menu">
                     <ul class="navbar-nav pt-lg-3">
-                        <!-- Dashboard - visible to all authenticated users -->
-                        <li class="nav-item">
+                        <!-- Admin section -->
+                        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                             <a class="nav-link" th:href="@{/dashboard}" th:classappend="${currentPage == 'dashboard'} ? 'active' : ''">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="ti ti-home fs-2"></i>
@@ -428,14 +428,75 @@
                                 <span class="nav-link-title">Dashboard</span>
                             </a>
                         </li>
-
-                        <!-- Admin section -->
                         <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                             <a class="nav-link" th:href="@{/admin/clients}" th:classappend="${currentPage == 'clients'} ? 'active' : ''">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="ti ti-users fs-2"></i>
                                 </span>
                                 <span class="nav-link-title">Gestione Clienti</span>
+                            </a>
+                        </li>
+
+                        <!-- Customer section -->
+                        <li class="nav-item" sec:authorize="hasRole('CUSTOMER')">
+                            <a class="nav-link" th:href="@{/dashboard}"
+                               th:classappend="${currentPage == 'home'} ? 'active' : ''"
+                               hx-get="/dashboard/section/home"
+                               hx-target="#dashboard-content"
+                               hx-push-url="false"
+                               th:hx-get="${currentPage != null} ? '/dashboard/section/home' : null">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-home fs-2"></i>
+                                </span>
+                                <span class="nav-link-title">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('CUSTOMER')">
+                            <a class="nav-link" href="#"
+                               th:classappend="${currentPage == 'fatture'} ? 'active' : ''"
+                               hx-get="/dashboard/section/fatture"
+                               hx-target="#dashboard-content"
+                               hx-push-url="false">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-file-invoice fs-2"></i>
+                                </span>
+                                <span class="nav-link-title">Fatture</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('CUSTOMER')">
+                            <a class="nav-link" href="#"
+                               th:classappend="${currentPage == 'risorse'} ? 'active' : ''"
+                               hx-get="/dashboard/section/risorse"
+                               hx-target="#dashboard-content"
+                               hx-push-url="false">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-files fs-2"></i>
+                                </span>
+                                <span class="nav-link-title">Risorse</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('CUSTOMER')">
+                            <a class="nav-link" href="#"
+                               th:classappend="${currentPage == 'progetti'} ? 'active' : ''"
+                               hx-get="/dashboard/section/progetti"
+                               hx-target="#dashboard-content"
+                               hx-push-url="false">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-folder fs-2"></i>
+                                </span>
+                                <span class="nav-link-title">Progetti</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('CUSTOMER')">
+                            <a class="nav-link" href="#"
+                               th:classappend="${currentPage == 'abbonamenti'} ? 'active' : ''"
+                               hx-get="/dashboard/section/abbonamenti"
+                               hx-target="#dashboard-content"
+                               hx-push-url="false">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-credit-card fs-2"></i>
+                                </span>
+                                <span class="nav-link-title">Abbonamenti</span>
                             </a>
                         </li>
                     </ul>
@@ -515,5 +576,7 @@
 
     <!-- Tabler JS from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta21/dist/js/tabler.min.js"></script>
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 </body>
 </html>

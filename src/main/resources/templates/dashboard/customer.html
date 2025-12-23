@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- Customer Dashboard Content Area -->
+        <div id="dashboard-content" hx-get="/dashboard/section/home" hx-trigger="load" hx-swap="innerHTML">
+            <!-- Content will be loaded via HTMX -->
+            <div class="d-flex justify-content-center align-items-center" style="min-height: 300px;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Caricamento...</span>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            /* Active nav state handling via JS */
+            .nav-link.htmx-active {
+                color: #fff !important;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            }
+        </style>
+
+        <script>
+            // Handle active state for sidebar navigation
+            document.addEventListener('htmx:afterRequest', function(evt) {
+                // Get the clicked link
+                const clickedLink = evt.detail.elt;
+                if (clickedLink && clickedLink.classList.contains('nav-link')) {
+                    // Remove active from all nav links
+                    document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    // Add active to clicked link
+                    clickedLink.classList.add('active');
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>
