@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS app_user (
     updated_at              TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT uk_app_user_email UNIQUE (email),
-    CONSTRAINT chk_app_user_role CHECK (role IN ('ADMIN', 'CLIENT')),
+    CONSTRAINT chk_app_user_role CHECK (role IN ('ADMIN', 'CUSTOMER')),
     CONSTRAINT chk_app_user_status CHECK (status IN ('ACTIVE', 'PENDING', 'DISABLED'))
 );
 
@@ -40,7 +40,7 @@ CREATE INDEX IF NOT EXISTS idx_app_user_invite_token ON app_user(invite_token)
 
 -- Comments
 COMMENT ON TABLE app_user IS 'Application users (admins and clients)';
-COMMENT ON COLUMN app_user.role IS 'ADMIN or CLIENT';
+COMMENT ON COLUMN app_user.role IS 'ADMIN or CUSTOMER';
 COMMENT ON COLUMN app_user.status IS 'ACTIVE, PENDING (awaiting password), or DISABLED';
 COMMENT ON COLUMN app_user.invite_token IS 'One-time invite token, expires after 48 hours';
 

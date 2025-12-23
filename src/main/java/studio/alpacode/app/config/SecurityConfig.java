@@ -48,10 +48,10 @@ public class SecurityConfig {
                 .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
 
                 // Customer area (CLIENT only)
-                .requestMatchers("/invoices/**").hasRole(Role.CLIENT.name())
-                .requestMatchers("/resources/**").hasRole(Role.CLIENT.name())
-                .requestMatchers("/projects/**").hasRole(Role.CLIENT.name())
-                .requestMatchers("/subscriptions/**").hasRole(Role.CLIENT.name())
+                .requestMatchers("/invoices/**").hasRole(Role.CUSTOMER.name())
+                .requestMatchers("/resources/**").hasRole(Role.CUSTOMER.name())
+                .requestMatchers("/projects/**").hasRole(Role.CUSTOMER.name())
+                .requestMatchers("/subscriptions/**").hasRole(Role.CUSTOMER.name())
 
                 // Dashboard - accessible by both ADMIN and CLIENT
                 .requestMatchers("/dashboard/**").hasAnyRole(Role.ADMIN.name(), Role.CUSTOMER.name())
