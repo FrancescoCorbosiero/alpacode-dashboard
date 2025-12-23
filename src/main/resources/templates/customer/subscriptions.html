@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title th:text="#{subscriptions.title}">Abbonamenti</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-body">
+            <div class="empty py-5">
+                <div class="empty-icon mb-4">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                        <i class="ti ti-credit-card" style="font-size: 2.5rem; color: white;"></i>
+                    </div>
+                </div>
+                <h2 class="empty-title" th:text="#{subscriptions.wip.title}">Sezione in costruzione</h2>
+                <p class="empty-subtitle text-muted mb-4" th:text="#{subscriptions.wip.description}">
+                    Gestisci i tuoi abbonamenti e piani. Prossimamente!
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <div class="d-flex align-items-center text-muted">
+                        <i class="ti ti-package me-2"></i>
+                        <span>Piano attivo</span>
+                    </div>
+                    <div class="d-flex align-items-center text-muted">
+                        <i class="ti ti-receipt me-2"></i>
+                        <span>Storico pagamenti</span>
+                    </div>
+                    <div class="d-flex align-items-center text-muted">
+                        <i class="ti ti-arrows-up-down me-2"></i>
+                        <span>Upgrade/Downgrade</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
