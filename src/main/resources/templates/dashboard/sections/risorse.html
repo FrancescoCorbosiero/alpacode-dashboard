@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Risorse Section Content (HTMX Fragment) -->
+<div class="risorse-section">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="page-title mb-1">Risorse</h2>
+            <p class="text-muted mb-0">Accedi ai tuoi documenti e file condivisi</p>
+        </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="row row-deck row-cards mb-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card resource-card">
+                <div class="card-body text-center py-4">
+                    <div class="resource-icon bg-primary-lt mb-3">
+                        <i class="ti ti-file-text"></i>
+                    </div>
+                    <h4 class="mb-1">Documenti</h4>
+                    <p class="text-muted small mb-0">0 file</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card resource-card">
+                <div class="card-body text-center py-4">
+                    <div class="resource-icon bg-success-lt mb-3">
+                        <i class="ti ti-photo"></i>
+                    </div>
+                    <h4 class="mb-1">Immagini</h4>
+                    <p class="text-muted small mb-0">0 file</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card resource-card">
+                <div class="card-body text-center py-4">
+                    <div class="resource-icon bg-warning-lt mb-3">
+                        <i class="ti ti-file-zip"></i>
+                    </div>
+                    <h4 class="mb-1">Archivi</h4>
+                    <p class="text-muted small mb-0">0 file</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card resource-card">
+                <div class="card-body text-center py-4">
+                    <div class="resource-icon bg-info-lt mb-3">
+                        <i class="ti ti-link"></i>
+                    </div>
+                    <h4 class="mb-1">Link Utili</h4>
+                    <p class="text-muted small mb-0">0 link</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Files List -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="ti ti-files me-2"></i>
+                Tutti i File
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="empty-state text-center py-5">
+                <div class="empty-state-icon mb-4">
+                    <i class="ti ti-folder-off"></i>
+                </div>
+                <h3 class="empty-state-title">Nessuna risorsa disponibile</h3>
+                <p class="empty-state-subtitle text-muted">
+                    Non ci sono ancora risorse condivise con te.<br>
+                    Quando saranno disponibili, le troverai qui.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .page-title {
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 1.5rem;
+    }
+
+    .resource-card {
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .resource-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .resource-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        font-size: 1.5rem;
+    }
+
+    .resource-icon.bg-info-lt {
+        background: rgba(66, 153, 225, 0.1);
+        color: #4299e1;
+    }
+
+    .empty-state-icon {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .empty-state-icon i {
+        font-size: 2.5rem;
+        color: #94a3b8;
+    }
+
+    .empty-state-title {
+        font-weight: 600;
+        color: #1e293b;
+    }
+</style>
+</body>
+</html>
