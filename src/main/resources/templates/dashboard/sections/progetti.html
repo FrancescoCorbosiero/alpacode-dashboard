@@ -6,8 +6,8 @@
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h2 class="page-title mb-1">Progetti</h2>
-            <p class="text-muted mb-0">Gestisci e monitora i tuoi progetti</p>
+            <h2 class="page-title mb-1" th:text="#{projects.title}">Progetti</h2>
+            <p class="text-muted mb-0" th:text="#{projects.subtitle}">Gestisci e monitora i tuoi progetti</p>
         </div>
     </div>
 
@@ -21,7 +21,7 @@
                             <i class="ti ti-folder"></i>
                         </div>
                         <div>
-                            <p class="stat-label mb-1">Totale Progetti</p>
+                            <p class="stat-label mb-1" th:text="#{projects.stats.total}">Totale Progetti</p>
                             <p class="stat-value mb-0">0</p>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                             <i class="ti ti-player-play"></i>
                         </div>
                         <div>
-                            <p class="stat-label mb-1">In Corso</p>
+                            <p class="stat-label mb-1" th:text="#{projects.stats.inProgress}">In Corso</p>
                             <p class="stat-value mb-0">0</p>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                             <i class="ti ti-circle-check"></i>
                         </div>
                         <div>
-                            <p class="stat-label mb-1">Completati</p>
+                            <p class="stat-label mb-1" th:text="#{projects.stats.completed}">Completati</p>
                             <p class="stat-value mb-0">0</p>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                             <i class="ti ti-clock-pause"></i>
                         </div>
                         <div>
-                            <p class="stat-label mb-1">In Pausa</p>
+                            <p class="stat-label mb-1" th:text="#{projects.stats.paused}">In Pausa</p>
                             <p class="stat-value mb-0">0</p>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
         <div class="card-header">
             <h3 class="card-title">
                 <i class="ti ti-list-details me-2"></i>
-                I Tuoi Progetti
+                <span th:text="#{projects.list}">I Tuoi Progetti</span>
             </h3>
         </div>
         <div class="card-body">
@@ -91,23 +91,22 @@
                 <div class="empty-state-icon mb-4">
                     <i class="ti ti-rocket"></i>
                 </div>
-                <h3 class="empty-state-title">Nessun progetto attivo</h3>
-                <p class="empty-state-subtitle text-muted">
-                    Non hai ancora progetti attivi.<br>
-                    I tuoi progetti appariranno qui quando saranno avviati.
+                <h3 class="empty-state-title" th:text="#{projects.empty.title}">Nessun progetto attivo</h3>
+                <p class="empty-state-subtitle text-muted" th:text="#{projects.empty.description}">
+                    Non hai ancora progetti attivi. I tuoi progetti appariranno qui quando saranno avviati.
                 </p>
                 <div class="empty-state-features mt-4">
                     <span class="feature-tag">
                         <i class="ti ti-check me-1"></i>
-                        Tracking Progressi
+                        <span th:text="#{projects.features.progressTracking}">Tracking Progressi</span>
                     </span>
                     <span class="feature-tag">
                         <i class="ti ti-check me-1"></i>
-                        Timeline Progetto
+                        <span th:text="#{projects.features.timeline}">Timeline Progetto</span>
                     </span>
                     <span class="feature-tag">
                         <i class="ti ti-check me-1"></i>
-                        Documentazione
+                        <span th:text="#{projects.features.documentation}">Documentazione</span>
                     </span>
                 </div>
             </div>

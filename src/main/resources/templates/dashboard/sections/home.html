@@ -13,7 +13,7 @@
                             <div class="d-flex align-items-center mb-3">
                                 <span class="welcome-avatar me-3" th:text="${user?.name != null} ? ${#strings.substring(user.name, 0, 1).toUpperCase()} : 'U'">U</span>
                                 <div>
-                                    <p class="text-muted mb-1 welcome-greeting">Bentornato,</p>
+                                    <p class="text-muted mb-1 welcome-greeting" th:text="#{dashboard.welcome}">Bentornato,</p>
                                     <h1 class="welcome-name mb-0" th:text="${user?.name} ?: 'Utente'">Nome Utente</h1>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                             <i class="ti ti-folder"></i>
                         </div>
                         <div>
-                            <p class="stat-label mb-1">Progetti Attivi</p>
+                            <p class="stat-label mb-1" th:text="#{dashboard.stats.activeProjects}">Progetti Attivi</p>
                             <p class="stat-value mb-0">0</p>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                             <i class="ti ti-file-invoice"></i>
                         </div>
                         <div>
-                            <p class="stat-label mb-1">Fatture</p>
+                            <p class="stat-label mb-1" th:text="#{dashboard.stats.invoices}">Fatture</p>
                             <p class="stat-value mb-0">0</p>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                             <i class="ti ti-files"></i>
                         </div>
                         <div>
-                            <p class="stat-label mb-1">Risorse</p>
+                            <p class="stat-label mb-1" th:text="#{dashboard.stats.resources}">Risorse</p>
                             <p class="stat-value mb-0">0</p>
                         </div>
                     </div>
@@ -92,8 +92,8 @@
                             <i class="ti ti-credit-card"></i>
                         </div>
                         <div>
-                            <p class="stat-label mb-1">Abbonamento</p>
-                            <p class="stat-value-sm mb-0">Attivo</p>
+                            <p class="stat-label mb-1" th:text="#{dashboard.stats.subscription}">Abbonamento</p>
+                            <p class="stat-value-sm mb-0" th:text="#{dashboard.stats.active}">Attivo</p>
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="ti ti-activity me-2 text-primary"></i>
-                        Attivita Recente
+                        <span th:text="#{dashboard.recentActivity}">Attività Recente</span>
                     </h3>
                 </div>
                 <div class="card-body">
@@ -116,9 +116,9 @@
                         <div class="empty-state-icon mb-3">
                             <i class="ti ti-bell-ringing"></i>
                         </div>
-                        <h4 class="empty-state-title">Nessuna attivita recente</h4>
-                        <p class="empty-state-subtitle text-muted">
-                            Le tue attivita recenti appariranno qui.
+                        <h4 class="empty-state-title" th:text="#{dashboard.recentActivity.empty}">Nessuna attività recente</h4>
+                        <p class="empty-state-subtitle text-muted" th:text="#{dashboard.recentActivity.emptyDesc}">
+                            Le tue attività recenti appariranno qui.
                         </p>
                     </div>
                 </div>
