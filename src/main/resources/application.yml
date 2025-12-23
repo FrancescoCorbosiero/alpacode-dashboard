@@ -48,7 +48,7 @@ spring:
 
   # H2 In-Memory Database
   datasource:
-    url: jdbc:h2:mem:alpacode;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
+    url: jdbc:h2:mem:alpacode;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -64,10 +64,10 @@ spring:
       settings:
         web-allow-others: false
 
-  # Flyway - Dev uses H2
+  # Flyway - Dev uses H2-specific migrations
   flyway:
     enabled: true
-    locations: classpath:db/migration/common,classpath:db/migration/h2
+    locations: classpath:db/migration/h2
     baseline-on-migrate: true
 
   # Thymeleaf - disable cache for hot reload
@@ -160,15 +160,15 @@ spring:
 
   # H2 for testing
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
     driver-class-name: org.h2.Driver
     username: sa
     password:
 
-  # Flyway
+  # Flyway - Test uses H2-specific migrations
   flyway:
     enabled: true
-    locations: classpath:db/migration/common,classpath:db/migration/h2
+    locations: classpath:db/migration/h2
     clean-disabled: false
 
   # Mail - disabled
