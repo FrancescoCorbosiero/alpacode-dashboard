@@ -6,8 +6,8 @@
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h2 class="page-title mb-1">Abbonamenti</h2>
-            <p class="text-muted mb-0">Gestisci il tuo piano e la fatturazione</p>
+            <h2 class="page-title mb-1" th:text="#{subscriptions.title}">Abbonamenti</h2>
+            <p class="text-muted mb-0" th:text="#{subscriptions.subtitle}">Gestisci il tuo piano e la fatturazione</p>
         </div>
     </div>
 
@@ -23,19 +23,19 @@
                                     <i class="ti ti-star"></i>
                                 </div>
                                 <div>
-                                    <span class="badge bg-success mb-2">Attivo</span>
-                                    <h3 class="plan-name mb-0">Piano Standard</h3>
+                                    <span class="badge bg-success mb-2" th:text="#{subscriptions.status.active}">Attivo</span>
+                                    <h3 class="plan-name mb-0" th:text="#{subscriptions.plan.standard}">Piano Standard</h3>
                                 </div>
                             </div>
-                            <p class="plan-description text-muted mb-0">
+                            <p class="plan-description text-muted mb-0" th:text="#{subscriptions.plan.description}">
                                 Accesso completo a tutti i servizi base. Il tuo abbonamento si rinnova automaticamente.
                             </p>
                         </div>
                         <div class="col-md-4 text-md-end mt-3 mt-md-0">
                             <div class="plan-price">
-                                <span class="price-currency">EUR</span>
+                                <span class="price-currency" th:text="#{subscriptions.price.currency}">EUR</span>
                                 <span class="price-amount">--</span>
-                                <span class="price-period">/mese</span>
+                                <span class="price-period" th:text="#{subscriptions.price.period}">/mese</span>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                         <div class="next-payment-icon mb-3">
                             <i class="ti ti-calendar-due"></i>
                         </div>
-                        <p class="text-muted small mb-1">Prossimo Rinnovo</p>
+                        <p class="text-muted small mb-1" th:text="#{subscriptions.nextRenewal}">Prossimo Rinnovo</p>
                         <h4 class="mb-0">--</h4>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
         <div class="card-header">
             <h3 class="card-title">
                 <i class="ti ti-history me-2"></i>
-                Storico Pagamenti
+                <span th:text="#{subscriptions.billingHistory}">Storico Pagamenti</span>
             </h3>
         </div>
         <div class="card-body">
@@ -70,9 +70,9 @@
                 <div class="empty-state-icon mb-4">
                     <i class="ti ti-receipt-off"></i>
                 </div>
-                <h3 class="empty-state-title">Nessun pagamento registrato</h3>
-                <p class="empty-state-subtitle text-muted">
-                    Lo storico dei tuoi pagamenti apparira qui.
+                <h3 class="empty-state-title" th:text="#{subscriptions.empty.title}">Nessun pagamento registrato</h3>
+                <p class="empty-state-subtitle text-muted" th:text="#{subscriptions.empty.description}">
+                    Lo storico dei tuoi pagamenti apparirà qui.
                 </p>
             </div>
         </div>

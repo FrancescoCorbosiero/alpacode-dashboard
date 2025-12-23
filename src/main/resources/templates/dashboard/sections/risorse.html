@@ -6,8 +6,8 @@
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h2 class="page-title mb-1">Risorse</h2>
-            <p class="text-muted mb-0">Accedi ai tuoi documenti e file condivisi</p>
+            <h2 class="page-title mb-1" th:text="#{resources.title}">Risorse</h2>
+            <p class="text-muted mb-0" th:text="#{resources.subtitle}">Accedi ai tuoi documenti e file condivisi</p>
         </div>
     </div>
 
@@ -19,8 +19,8 @@
                     <div class="resource-icon bg-primary-lt mb-3">
                         <i class="ti ti-file-text"></i>
                     </div>
-                    <h4 class="mb-1">Documenti</h4>
-                    <p class="text-muted small mb-0">0 file</p>
+                    <h4 class="mb-1" th:text="#{resources.category.documents}">Documenti</h4>
+                    <p class="text-muted small mb-0">0 <span th:text="#{resources.files}">file</span></p>
                 </div>
             </div>
         </div>
@@ -31,8 +31,8 @@
                     <div class="resource-icon bg-success-lt mb-3">
                         <i class="ti ti-photo"></i>
                     </div>
-                    <h4 class="mb-1">Immagini</h4>
-                    <p class="text-muted small mb-0">0 file</p>
+                    <h4 class="mb-1" th:text="#{resources.category.images}">Immagini</h4>
+                    <p class="text-muted small mb-0">0 <span th:text="#{resources.files}">file</span></p>
                 </div>
             </div>
         </div>
@@ -43,8 +43,8 @@
                     <div class="resource-icon bg-warning-lt mb-3">
                         <i class="ti ti-file-zip"></i>
                     </div>
-                    <h4 class="mb-1">Archivi</h4>
-                    <p class="text-muted small mb-0">0 file</p>
+                    <h4 class="mb-1" th:text="#{resources.category.archives}">Archivi</h4>
+                    <p class="text-muted small mb-0">0 <span th:text="#{resources.files}">file</span></p>
                 </div>
             </div>
         </div>
@@ -55,8 +55,8 @@
                     <div class="resource-icon bg-info-lt mb-3">
                         <i class="ti ti-link"></i>
                     </div>
-                    <h4 class="mb-1">Link Utili</h4>
-                    <p class="text-muted small mb-0">0 link</p>
+                    <h4 class="mb-1" th:text="#{resources.category.links}">Link Utili</h4>
+                    <p class="text-muted small mb-0">0 <span th:text="#{resources.links}">link</span></p>
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
         <div class="card-header">
             <h3 class="card-title">
                 <i class="ti ti-files me-2"></i>
-                Tutti i File
+                <span th:text="#{resources.allFiles}">Tutti i File</span>
             </h3>
         </div>
         <div class="card-body">
@@ -75,10 +75,9 @@
                 <div class="empty-state-icon mb-4">
                     <i class="ti ti-folder-off"></i>
                 </div>
-                <h3 class="empty-state-title">Nessuna risorsa disponibile</h3>
-                <p class="empty-state-subtitle text-muted">
-                    Non ci sono ancora risorse condivise con te.<br>
-                    Quando saranno disponibili, le troverai qui.
+                <h3 class="empty-state-title" th:text="#{resources.empty.title}">Nessuna risorsa disponibile</h3>
+                <p class="empty-state-subtitle text-muted" th:text="#{resources.empty.description}">
+                    Non ci sono ancora risorse condivise con te. Quando saranno disponibili, le troverai qui.
                 </p>
             </div>
         </div>

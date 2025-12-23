@@ -514,7 +514,7 @@
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="ti ti-home fs-2"></i>
                                 </span>
-                                <span class="nav-link-title">Home</span>
+                                <span class="nav-link-title" th:text="#{nav.home}">Home</span>
                             </a>
                         </li>
                         <li class="nav-item" sec:authorize="hasRole('CUSTOMER')">
@@ -526,7 +526,7 @@
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="ti ti-file-invoice fs-2"></i>
                                 </span>
-                                <span class="nav-link-title">Fatture</span>
+                                <span class="nav-link-title" th:text="#{nav.invoices}">Fatture</span>
                             </a>
                         </li>
                         <li class="nav-item" sec:authorize="hasRole('CUSTOMER')">
@@ -538,7 +538,7 @@
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="ti ti-files fs-2"></i>
                                 </span>
-                                <span class="nav-link-title">Risorse</span>
+                                <span class="nav-link-title" th:text="#{nav.resources}">Risorse</span>
                             </a>
                         </li>
                         <li class="nav-item" sec:authorize="hasRole('CUSTOMER')">
@@ -550,7 +550,7 @@
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="ti ti-folder fs-2"></i>
                                 </span>
-                                <span class="nav-link-title">Progetti</span>
+                                <span class="nav-link-title" th:text="#{nav.projects}">Progetti</span>
                             </a>
                         </li>
                         <li class="nav-item" sec:authorize="hasRole('CUSTOMER')">
@@ -562,7 +562,7 @@
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="ti ti-credit-card fs-2"></i>
                                 </span>
-                                <span class="nav-link-title">Abbonamenti</span>
+                                <span class="nav-link-title" th:text="#{nav.subscriptions}">Abbonamenti</span>
                             </a>
                         </li>
                     </ul>
@@ -617,7 +617,7 @@
                                     <form th:action="@{/logout}" method="post" class="m-0">
                                         <button type="submit" class="dropdown-item text-danger">
                                             <i class="ti ti-logout me-2"></i>
-                                            Logout
+                                            <span th:text="#{nav.logout}">Logout</span>
                                         </button>
                                     </form>
                                 </div>
@@ -658,7 +658,7 @@
                 <div class="container-xl">
                     <div class="row text-center align-items-center">
                         <div class="col-12">
-                            <span class="text-muted">&copy; 2025 Alpacode Studio. Tutti i diritti riservati.</span>
+                            <span class="text-muted" th:text="#{app.copyright}">&copy; 2025 Alpacode Studio. Tutti i diritti riservati.</span>
                         </div>
                     </div>
                 </div>
