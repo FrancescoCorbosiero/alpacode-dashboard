@@ -61,7 +61,7 @@ public interface UserRepository extends CrudRepository<User, Long>, PagingAndSor
      * Find all clients.
      */
     default List<User> findAllClients() {
-        return findByRole(Role.CLIENT.name());
+        return findByRole(Role.CUSTOMER.name());
     }
 
     /**
