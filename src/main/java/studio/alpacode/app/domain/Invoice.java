@@ -1,11 +1,18 @@
 package studio.alpacode.app.domain;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Locale;
 
+/**
+ * Invoice entity.
+ * Stores client invoices with PDF reference.
+ */
 public class Invoice {
 
     @Id
@@ -29,8 +36,10 @@ public class Invoice {
 
     private String pdfPath;
 
+    @CreatedDate
     private LocalDateTime createdAt;
 
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
     public Invoice() {
@@ -45,8 +54,6 @@ public class Invoice {
         this.amount = amount;
         this.currency = "EUR";
         this.status = status;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
     }
 
     // Getters and Setters
@@ -147,6 +154,8 @@ public class Invoice {
         this.updatedAt = updatedAt;
     }
 
+    // Convenience methods
+
     public boolean isPaid() {
         return this.status == InvoiceStatus.PAID;
     }
@@ -159,7 +168,14 @@ public class Invoice {
         return this.status == InvoiceStatus.OVERDUE;
     }
 
+    /**
+     * Returns formatted amount with currency symbol.
+     * Uses Italian locale for proper decimal formatting.
+     */
     public String getFormattedAmount() {
-        return String.format("€ %.2f", amount);
+        if (amount == null) {
+            return "€ 0,00";
+        }
+        return String.format(Locale.ITALIAN, "€ %,.2f", amount);
     }
 }

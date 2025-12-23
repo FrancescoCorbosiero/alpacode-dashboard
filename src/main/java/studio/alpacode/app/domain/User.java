@@ -1,9 +1,15 @@
 package studio.alpacode.app.domain;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
+/**
+ * Application user entity.
+ * Represents both admin and client users.
+ */
 public class User {
 
     @Id
@@ -25,8 +31,10 @@ public class User {
 
     private LocalDateTime inviteTokenExpiry;
 
+    @CreatedDate
     private LocalDateTime createdAt;
 
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
     public User() {
@@ -37,8 +45,6 @@ public class User {
         this.name = name;
         this.role = role;
         this.status = status;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
     }
 
     // Getters and Setters
@@ -130,6 +136,8 @@ public class User {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    // Convenience methods
 
     public boolean isActive() {
         return this.status == Status.ACTIVE;
