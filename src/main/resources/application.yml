@@ -1,0 +1,180 @@
+# =============================================
+# Alpacode Dashboard - Application Configuration
+# =============================================
+
+spring:
+  application:
+    name: alpacode-dashboard
+
+  # Default profile
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+  # Thymeleaf
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+
+  # i18n
+  messages:
+    basename: messages
+    encoding: UTF-8
+    fallback-to-system-locale: false
+
+  # Mail (overridden per profile)
+  mail:
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+# Application properties
+app:
+  base-url: ${APP_BASE_URL:http://localhost:8080}
+
+# Server
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+---
+# =============================================
+# DEVELOPMENT PROFILE
+# =============================================
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  # H2 In-Memory Database
+  datasource:
+    url: jdbc:h2:mem:alpacode;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 2
+
+  # H2 Console
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: false
+
+  # Flyway - Dev uses H2
+  flyway:
+    enabled: true
+    locations: classpath:db/migration/common,classpath:db/migration/h2
+    baseline-on-migrate: true
+
+  # Thymeleaf - disable cache for hot reload
+  thymeleaf:
+    cache: false
+
+  # Mail - mock mode (log instead of send)
+  mail:
+    host:
+
+# Admin seed (dev only)
+app:
+  admin:
+    email: admin@alpacode.studio
+    password: admin123
+    name: Administrator
+
+# Logging
+logging:
+  level:
+    studio.alpacode: DEBUG
+    org.springframework.security: INFO
+    org.flywaydb: INFO
+
+---
+# =============================================
+# PRODUCTION PROFILE
+# =============================================
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  # PostgreSQL Database
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:alpacode}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:20}
+      minimum-idle: ${DB_POOL_MIN_IDLE:5}
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      connection-timeout: 20000
+      leak-detection-threshold: 60000
+
+  # Flyway - Prod uses PostgreSQL
+  flyway:
+    enabled: true
+    locations: classpath:db/migration/common,classpath:db/migration/postgresql
+    baseline-on-migrate: false
+    validate-on-migrate: true
+    out-of-order: false
+
+  # Thymeleaf - enable cache
+  thymeleaf:
+    cache: true
+
+  # Mail - Resend
+  mail:
+    host: smtp.resend.com
+    port: 587
+    username: ${RESEND_API_KEY}
+    password: ${RESEND_API_KEY}
+
+# Admin seed (production - use strong password!)
+app:
+  admin:
+    email: ${ADMIN_EMAIL}
+    password: ${ADMIN_PASSWORD}
+    name: ${ADMIN_NAME:Administrator}
+
+# Logging
+logging:
+  level:
+    studio.alpacode: INFO
+    org.springframework.security: WARN
+    org.flywaydb: INFO
+    com.zaxxer.hikari: WARN
+
+---
+# =============================================
+# TEST PROFILE
+# =============================================
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  # H2 for testing
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  # Flyway
+  flyway:
+    enabled: true
+    locations: classpath:db/migration/common,classpath:db/migration/h2
+    clean-disabled: false
+
+  # Mail - disabled
+  mail:
+    host:
+
+logging:
+  level:
+    studio.alpacode: DEBUG

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title th:text="#{invoices.title}">Fatture</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- Page Header with Filters -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h3 class="mb-1" th:text="#{invoices.title}">Fatture</h3>
+                    <p class="text-muted mb-0" th:text="#{invoices.subtitle}">Consulta e scarica le tue fatture</p>
+                </div>
+                <div class="col-lg-6">
+                    <form th:action="@{/invoices}" method="get" class="row g-2 justify-content-lg-end">
+                        <!-- Year Filter -->
+                        <div class="col-auto">
+                            <select class="form-select" name="year" onchange="this.form.submit()">
+                                <option value="" th:text="#{invoices.filter.year}">Anno</option>
+                                <option th:each="y : ${availableYears}"
+                                        th:value="${y}"
+                                        th:text="${y}"
+                                        th:selected="${selectedYear != null and selectedYear == y}">2024</option>
+                            </select>
+                        </div>
+                        <!-- Status Filter -->
+                        <div class="col-auto">
+                            <select class="form-select" name="status" onchange="this.form.submit()">
+                                <option value="" th:text="#{invoices.filter.status}">Stato</option>
+                                <option th:each="s : ${statuses}"
+                                        th:value="${s.name()}"
+                                        th:text="${s.name() == 'PAID'} ? #{invoices.status.paid} : (${s.name() == 'PENDING'} ? #{invoices.status.pending} : #{invoices.status.overdue})"
+                                        th:selected="${selectedStatus != null and selectedStatus == s.name()}">Pagata</option>
+                            </select>
+                        </div>
+                        <!-- Reset -->
+                        <div class="col-auto" th:if="${selectedYear != null or selectedStatus != null}">
+                            <a th:href="@{/invoices}" class="btn btn-ghost-secondary">
+                                <i class="ti ti-x me-1"></i>
+                                <span th:text="#{common.reset}">Reset</span>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4" th:if="${not #lists.isEmpty(invoices)}">
+        <div class="col-md-6">
+            <div class="card stat-card stat-primary">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-primary-lt me-3">
+                            <i class="ti ti-file-invoice"></i>
+                        </div>
+                        <div>
+                            <div class="stat-value" th:text="${#lists.size(invoices)}">0</div>
+                            <div class="stat-label" th:text="#{invoices.total}">Totale fatture</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card stat-card stat-success">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-success-lt me-3">
+                            <i class="ti ti-currency-euro"></i>
+                        </div>
+                        <div>
+                            <div class="stat-value">
+                                <span th:text="${#numbers.formatDecimal(invoices.![amount].stream().reduce(0, (a, b) -> a.add(b)), 1, 'COMMA', 2, 'POINT')}">0,00</span>
+                            </div>
+                            <div class="stat-label" th:text="#{invoices.totalAmount}">Importo totale</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoices Table -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title" th:text="#{invoices.title}">Fatture</h3>
+        </div>
+        <div class="card-body p-0" th:if="${not #lists.isEmpty(invoices)}">
+            <div class="table-responsive">
+                <table class="table table-vcenter card-table">
+                    <thead>
+                        <tr>
+                            <th th:text="#{invoices.table.number}">Numero</th>
+                            <th th:text="#{invoices.table.date}">Data</th>
+                            <th th:text="#{invoices.table.description}">Descrizione</th>
+                            <th th:text="#{invoices.table.amount}">Importo</th>
+                            <th th:text="#{invoices.table.status}">Stato</th>
+                            <th class="text-end" th:text="#{invoices.table.actions}">Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="invoice : ${invoices}">
+                            <td>
+                                <span class="fw-semibold" th:text="${invoice.invoiceNumber}">INV-001</span>
+                            </td>
+                            <td>
+                                <span th:text="${#temporals.format(invoice.invoiceDate, 'dd/MM/yyyy')}">01/01/2024</span>
+                            </td>
+                            <td>
+                                <span th:text="${invoice.description}" class="text-muted">Servizio consulenza</span>
+                            </td>
+                            <td>
+                                <span class="fw-semibold" th:text="${invoice.formattedAmount}">€ 1.000,00</span>
+                            </td>
+                            <td>
+                                <span class="badge"
+                                      th:classappend="${invoice.status.name() == 'PAID'} ? 'bg-success-lt text-success' : (${invoice.status.name() == 'PENDING'} ? 'bg-warning-lt text-warning' : 'bg-danger-lt text-danger')"
+                                      th:text="${invoice.status.name() == 'PAID'} ? #{invoices.status.paid} : (${invoice.status.name() == 'PENDING'} ? #{invoices.status.pending} : #{invoices.status.overdue})">
+                                    Pagata
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <a th:if="${invoice.pdfPath != null}"
+                                   th:href="@{'/invoices/download/' + ${invoice.id}}"
+                                   class="btn btn-sm btn-ghost-secondary"
+                                   th:title="#{invoices.download}">
+                                    <i class="ti ti-download me-1"></i>
+                                    PDF
+                                </a>
+                                <span th:if="${invoice.pdfPath == null}" class="text-muted small">-</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="card-body" th:if="${#lists.isEmpty(invoices)}">
+            <div class="empty">
+                <div class="empty-icon">
+                    <i class="ti ti-file-invoice"></i>
+                </div>
+                <p class="empty-title" th:text="#{invoices.empty.title}">Nessuna fattura</p>
+                <p class="empty-subtitle text-muted" th:text="#{invoices.empty.description}">
+                    Non hai ancora ricevuto fatture.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
