@@ -6,14 +6,30 @@ spring:
   application:
     name: alpacode-dashboard
 
-  # Default profile
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE:dev}
+  # PostgreSQL Database
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:alpacode}
+    username: ${DB_USERNAME:alpacode}
+    password: ${DB_PASSWORD:alpacode}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:10}
+      minimum-idle: 2
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      connection-timeout: 20000
+
+  # SQL initialization - NEVER auto-run in production
+  # Run schema.sql manually when setting up the database
+  sql:
+    init:
+      mode: never
 
   # Thymeleaf
   thymeleaf:
     mode: HTML
     encoding: UTF-8
+    cache: ${THYMELEAF_CACHE:false}
 
   # i18n
   messages:
@@ -21,8 +37,12 @@ spring:
     encoding: UTF-8
     fallback-to-system-locale: false
 
-  # Mail (overridden per profile)
+  # Mail
   mail:
+    host: ${MAIL_HOST:}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
@@ -30,146 +50,21 @@ spring:
 # Application properties
 app:
   base-url: ${APP_BASE_URL:http://localhost:8080}
+  admin:
+    email: ${ADMIN_EMAIL:admin@alpacode.studio}
+    password: ${ADMIN_PASSWORD:admin123}
+    name: ${ADMIN_NAME:Administrator}
 
 # Server
 server:
+  port: ${SERVER_PORT:8080}
   error:
     include-message: always
     include-binding-errors: always
 
----
-# =============================================
-# DEVELOPMENT PROFILE
-# =============================================
-spring:
-  config:
-    activate:
-      on-profile: dev
-
-  # H2 In-Memory Database
-  datasource:
-    url: jdbc:h2:mem:alpacode;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-    hikari:
-      maximum-pool-size: 5
-      minimum-idle: 2
-
-  # SQL initialization
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:schema.sql
-
-  # H2 Console
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-      settings:
-        web-allow-others: false
-
-  # Thymeleaf - disable cache for hot reload
-  thymeleaf:
-    cache: false
-
-  # Mail - mock mode (log instead of send)
-  mail:
-    host:
-
-# Admin seed (dev only)
-app:
-  admin:
-    email: admin@alpacode.studio
-    password: admin123
-    name: Administrator
-
 # Logging
 logging:
   level:
-    studio.alpacode: DEBUG
+    studio.alpacode: ${LOG_LEVEL:DEBUG}
     org.springframework.security: INFO
-
----
-# =============================================
-# PRODUCTION PROFILE
-# =============================================
-spring:
-  config:
-    activate:
-      on-profile: prod
-
-  # PostgreSQL Database
-  datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:alpacode}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-    hikari:
-      maximum-pool-size: ${DB_POOL_SIZE:20}
-      minimum-idle: ${DB_POOL_MIN_IDLE:5}
-      idle-timeout: 300000
-      max-lifetime: 1200000
-      connection-timeout: 20000
-      leak-detection-threshold: 60000
-
-  # SQL initialization - disabled in prod (use migrations tool)
-  sql:
-    init:
-      mode: never
-
-  # Thymeleaf - enable cache
-  thymeleaf:
-    cache: true
-
-  # Mail - Resend
-  mail:
-    host: smtp.resend.com
-    port: 587
-    username: ${RESEND_API_KEY}
-    password: ${RESEND_API_KEY}
-
-# Admin seed (production - use strong password!)
-app:
-  admin:
-    email: ${ADMIN_EMAIL}
-    password: ${ADMIN_PASSWORD}
-    name: ${ADMIN_NAME:Administrator}
-
-# Logging
-logging:
-  level:
-    studio.alpacode: INFO
-    org.springframework.security: WARN
     com.zaxxer.hikari: WARN
-
----
-# =============================================
-# TEST PROFILE
-# =============================================
-spring:
-  config:
-    activate:
-      on-profile: test
-
-  # H2 for testing
-  datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-
-  # SQL initialization
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:schema.sql
-
-  # Mail - disabled
-  mail:
-    host:
-
-logging:
-  level:
-    studio.alpacode: DEBUG
