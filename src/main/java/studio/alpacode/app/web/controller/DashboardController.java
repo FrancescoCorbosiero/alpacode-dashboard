@@ -4,7 +4,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import studio.alpacode.app.domain.Role;
 import studio.alpacode.app.domain.User;
 import studio.alpacode.app.service.UserService;
 
@@ -25,8 +27,31 @@ public class DashboardController {
 
         model.addAttribute("user", user);
         model.addAttribute("pageTitle", "Dashboard");
-        model.addAttribute("currentPage", "dashboard");
 
+        // Route based on user role
+        if (user != null && user.getRole() == Role.CUSTOMER) {
+            model.addAttribute("currentPage", "home");
+            return "dashboard/customer";
+        }
+
+        model.addAttribute("currentPage", "dashboard");
         return "dashboard/index";
+    }
+
+    // HTMX endpoints for customer dashboard sections
+    @GetMapping("/section/{section}")
+    public String getSection(@PathVariable String section, Authentication authentication, Model model) {
+        String email = authentication.getName();
+        User user = userService.findByEmail(email).orElse(null);
+        model.addAttribute("user", user);
+
+        return switch (section) {
+            case "home" -> "dashboard/sections/home";
+            case "fatture" -> "dashboard/sections/fatture";
+            case "risorse" -> "dashboard/sections/risorse";
+            case "progetti" -> "dashboard/sections/progetti";
+            case "abbonamenti" -> "dashboard/sections/abbonamenti";
+            default -> "dashboard/sections/home";
+        };
     }
 }

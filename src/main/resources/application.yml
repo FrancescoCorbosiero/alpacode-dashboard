@@ -1,0 +1,70 @@
+# =============================================
+# Alpacode Dashboard - Application Configuration
+# =============================================
+
+spring:
+  application:
+    name: alpacode-dashboard
+
+  # PostgreSQL Database
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:alpacode}
+    username: ${DB_USERNAME:alpacode}
+    password: ${DB_PASSWORD:alpacode}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:10}
+      minimum-idle: 2
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      connection-timeout: 20000
+
+  # SQL initialization - NEVER auto-run in production
+  # Run schema.sql manually when setting up the database
+  sql:
+    init:
+      mode: never
+
+  # Thymeleaf
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    cache: ${THYMELEAF_CACHE:false}
+
+  # i18n
+  messages:
+    basename: messages
+    encoding: UTF-8
+    fallback-to-system-locale: false
+
+  # Mail
+  mail:
+    host: ${MAIL_HOST:}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+# Application properties
+app:
+  base-url: ${APP_BASE_URL:http://localhost:8080}
+  admin:
+    email: ${ADMIN_EMAIL:admin@alpacode.studio}
+    password: ${ADMIN_PASSWORD:admin123}
+    name: ${ADMIN_NAME:Administrator}
+
+# Server
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# Logging
+logging:
+  level:
+    studio.alpacode: ${LOG_LEVEL:DEBUG}
+    org.springframework.security: INFO
+    com.zaxxer.hikari: WARN

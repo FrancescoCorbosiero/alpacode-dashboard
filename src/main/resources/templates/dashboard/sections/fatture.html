@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Fatture Section Content (HTMX Fragment) -->
+<div class="fatture-section">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="page-title mb-1" th:text="#{invoices.title}">Fatture</h2>
+            <p class="text-muted mb-0" th:text="#{invoices.subtitle}">Visualizza e gestisci le tue fatture</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row row-deck row-cards mb-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card stat-primary">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-primary-lt me-3">
+                            <i class="ti ti-file-invoice"></i>
+                        </div>
+                        <div>
+                            <p class="stat-label mb-1" th:text="#{invoices.stats.total}">Totale Fatture</p>
+                            <p class="stat-value mb-0">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card stat-success">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-success-lt me-3">
+                            <i class="ti ti-circle-check"></i>
+                        </div>
+                        <div>
+                            <p class="stat-label mb-1" th:text="#{invoices.stats.paid}">Pagate</p>
+                            <p class="stat-value mb-0">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card stat-warning">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-warning-lt me-3">
+                            <i class="ti ti-clock"></i>
+                        </div>
+                        <div>
+                            <p class="stat-label mb-1" th:text="#{invoices.stats.pending}">In Attesa</p>
+                            <p class="stat-value mb-0">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card stat-danger">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-danger-lt me-3">
+                            <i class="ti ti-alert-circle"></i>
+                        </div>
+                        <div>
+                            <p class="stat-label mb-1" th:text="#{invoices.stats.overdue}">Scadute</p>
+                            <p class="stat-value mb-0">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoices List -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="ti ti-list me-2"></i>
+                <span th:text="#{invoices.list}">Elenco Fatture</span>
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="empty-state text-center py-5">
+                <div class="empty-state-icon mb-4">
+                    <i class="ti ti-file-invoice"></i>
+                </div>
+                <h3 class="empty-state-title" th:text="#{invoices.empty.title}">Nessuna fattura</h3>
+                <p class="empty-state-subtitle text-muted" th:text="#{invoices.empty.description2}">
+                    Non hai ancora fatture da visualizzare. Le tue fatture appariranno qui quando saranno disponibili.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .page-title {
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 1.5rem;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1e293b;
+    }
+
+    .empty-state-icon {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .empty-state-icon i {
+        font-size: 2.5rem;
+        color: #94a3b8;
+    }
+
+    .empty-state-title {
+        font-weight: 600;
+        color: #1e293b;
+    }
+</style>
+</body>
+</html>

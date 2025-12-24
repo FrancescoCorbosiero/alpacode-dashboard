@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Progetti Section Content (HTMX Fragment) -->
+<div class="progetti-section">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="page-title mb-1" th:text="#{projects.title}">Progetti</h2>
+            <p class="text-muted mb-0" th:text="#{projects.subtitle}">Gestisci e monitora i tuoi progetti</p>
+        </div>
+    </div>
+
+    <!-- Project Stats -->
+    <div class="row row-deck row-cards mb-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card stat-primary">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-primary-lt me-3">
+                            <i class="ti ti-folder"></i>
+                        </div>
+                        <div>
+                            <p class="stat-label mb-1" th:text="#{projects.stats.total}">Totale Progetti</p>
+                            <p class="stat-value mb-0">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card stat-success">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-success-lt me-3">
+                            <i class="ti ti-player-play"></i>
+                        </div>
+                        <div>
+                            <p class="stat-label mb-1" th:text="#{projects.stats.inProgress}">In Corso</p>
+                            <p class="stat-value mb-0">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card stat-info">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-info-lt me-3">
+                            <i class="ti ti-circle-check"></i>
+                        </div>
+                        <div>
+                            <p class="stat-label mb-1" th:text="#{projects.stats.completed}">Completati</p>
+                            <p class="stat-value mb-0">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card stat-warning">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-warning-lt me-3">
+                            <i class="ti ti-clock-pause"></i>
+                        </div>
+                        <div>
+                            <p class="stat-label mb-1" th:text="#{projects.stats.paused}">In Pausa</p>
+                            <p class="stat-value mb-0">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects List -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="ti ti-list-details me-2"></i>
+                <span th:text="#{projects.list}">I Tuoi Progetti</span>
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="empty-state text-center py-5">
+                <div class="empty-state-icon mb-4">
+                    <i class="ti ti-rocket"></i>
+                </div>
+                <h3 class="empty-state-title" th:text="#{projects.empty.title}">Nessun progetto attivo</h3>
+                <p class="empty-state-subtitle text-muted" th:text="#{projects.empty.description}">
+                    Non hai ancora progetti attivi. I tuoi progetti appariranno qui quando saranno avviati.
+                </p>
+                <div class="empty-state-features mt-4">
+                    <span class="feature-tag">
+                        <i class="ti ti-check me-1"></i>
+                        <span th:text="#{projects.features.progressTracking}">Tracking Progressi</span>
+                    </span>
+                    <span class="feature-tag">
+                        <i class="ti ti-check me-1"></i>
+                        <span th:text="#{projects.features.timeline}">Timeline Progetto</span>
+                    </span>
+                    <span class="feature-tag">
+                        <i class="ti ti-check me-1"></i>
+                        <span th:text="#{projects.features.documentation}">Documentazione</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .page-title {
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 1.5rem;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1e293b;
+    }
+
+    .stat-card.stat-info::before {
+        background: #4299e1;
+    }
+
+    .stat-icon.bg-info-lt {
+        background: rgba(66, 153, 225, 0.1);
+        color: #4299e1;
+    }
+
+    .empty-state-icon {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .empty-state-icon i {
+        font-size: 2.5rem;
+        color: #94a3b8;
+    }
+
+    .empty-state-title {
+        font-weight: 600;
+        color: #1e293b;
+    }
+
+    .feature-tag {
+        display: inline-flex;
+        align-items: center;
+        background: #f1f5f9;
+        color: #64748b;
+        padding: 0.4rem 0.8rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        margin: 0.25rem;
+    }
+
+    .feature-tag i {
+        color: #2fb344;
+    }
+</style>
+</body>
+</html>

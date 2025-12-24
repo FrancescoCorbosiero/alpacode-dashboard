@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Home Section Content (HTMX Fragment) -->
+<div class="home-section">
+    <!-- Welcome Hero Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card welcome-card">
+                <div class="card-body p-4 p-md-5">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="welcome-avatar me-3" th:text="${user?.name != null} ? ${#strings.substring(user.name, 0, 1).toUpperCase()} : 'U'">U</span>
+                                <div>
+                                    <p class="text-muted mb-1 welcome-greeting" th:text="#{dashboard.welcome}">Bentornato,</p>
+                                    <h1 class="welcome-name mb-0" th:text="${user?.name} ?: 'Utente'">Nome Utente</h1>
+                                </div>
+                            </div>
+                            <p class="welcome-subtitle mb-0" th:if="${user?.companyName}">
+                                <i class="ti ti-building-skyscraper me-2"></i>
+                                <span th:text="${user.companyName}">Nome Azienda</span>
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-md-end mt-4 mt-md-0">
+                            <div class="welcome-date">
+                                <i class="ti ti-calendar-event me-2"></i>
+                                <span th:text="${#temporals.format(#temporals.createNow(), 'EEEE, d MMMM yyyy')}">Lunedi, 1 Gennaio 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="row row-deck row-cards mb-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card stat-primary">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-primary-lt me-3">
+                            <i class="ti ti-folder"></i>
+                        </div>
+                        <div>
+                            <p class="stat-label mb-1" th:text="#{dashboard.stats.activeProjects}">Progetti Attivi</p>
+                            <p class="stat-value mb-0">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card stat-success">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-success-lt me-3">
+                            <i class="ti ti-file-invoice"></i>
+                        </div>
+                        <div>
+                            <p class="stat-label mb-1" th:text="#{dashboard.stats.invoices}">Fatture</p>
+                            <p class="stat-value mb-0">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card stat-info">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-info-lt me-3">
+                            <i class="ti ti-files"></i>
+                        </div>
+                        <div>
+                            <p class="stat-label mb-1" th:text="#{dashboard.stats.resources}">Risorse</p>
+                            <p class="stat-value mb-0">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card stat-warning">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-warning-lt me-3">
+                            <i class="ti ti-credit-card"></i>
+                        </div>
+                        <div>
+                            <p class="stat-label mb-1" th:text="#{dashboard.stats.subscription}">Abbonamento</p>
+                            <p class="stat-value-sm mb-0" th:text="#{dashboard.stats.active}">Attivo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="ti ti-activity me-2 text-primary"></i>
+                        <span th:text="#{dashboard.recentActivity}">Attività Recente</span>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="empty-state text-center py-4">
+                        <div class="empty-state-icon mb-3">
+                            <i class="ti ti-bell-ringing"></i>
+                        </div>
+                        <h4 class="empty-state-title" th:text="#{dashboard.recentActivity.empty}">Nessuna attività recente</h4>
+                        <p class="empty-state-subtitle text-muted" th:text="#{dashboard.recentActivity.emptyDesc}">
+                            Le tue attività recenti appariranno qui.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Welcome Card */
+    .welcome-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .welcome-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 60%;
+        height: 200%;
+        background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+
+    .welcome-avatar {
+        width: 64px;
+        height: 64px;
+        background: rgba(255,255,255,0.2);
+        border: 3px solid rgba(255,255,255,0.3);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    .welcome-greeting {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .welcome-name {
+        color: #fff;
+        font-size: 1.75rem;
+        font-weight: 700;
+    }
+
+    .welcome-subtitle {
+        color: rgba(255,255,255,0.8);
+        font-size: 1rem;
+    }
+
+    .welcome-date {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.9rem;
+        background: rgba(255,255,255,0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    /* Stat Cards */
+    .stat-card.stat-info::before {
+        background: #4299e1;
+    }
+
+    .stat-icon.bg-info-lt {
+        background: rgba(66, 153, 225, 0.1);
+        color: #4299e1;
+    }
+
+    .stat-value-sm {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1e293b;
+    }
+
+    /* Empty State */
+    .empty-state-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .empty-state-icon i {
+        font-size: 2rem;
+        color: #94a3b8;
+    }
+
+    .empty-state-title {
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+    }
+</style>
+</body>
+</html>
